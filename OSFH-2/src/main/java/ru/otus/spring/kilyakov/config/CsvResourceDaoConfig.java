@@ -7,17 +7,10 @@ import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
-import ru.otus.spring.kilyakov.dao.impl.CsvResourceDaoImpl;
 import ru.otus.spring.kilyakov.domain.Question;
 
 @Configuration
 public class CsvResourceDaoConfig {
-
-    @Bean
-    public CsvResourceDaoImpl csvResourceDao(FlatFileItemReader<Question> cvsFileItemReader) {
-        return new CsvResourceDaoImpl(cvsFileItemReader);
-    }
-
 
     @Bean
     public FlatFileItemReader<Question> flatFileItemReader() {

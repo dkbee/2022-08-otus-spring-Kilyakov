@@ -1,5 +1,6 @@
 package ru.otus.spring.kilyakov.domain;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -11,7 +12,7 @@ import lombok.Setter;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Question {
+public final class Question {
     private String question;
     private String answer1;
     private String answer2;

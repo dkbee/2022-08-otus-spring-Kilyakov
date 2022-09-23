@@ -1,50 +1,58 @@
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
 import ru.otus.spring.kilyakov.config.property.StudentTestingProperty;
-import ru.otus.spring.kilyakov.domain.Question;
 import ru.otus.spring.kilyakov.dao.impl.CsvResourceDaoImpl;
+import ru.otus.spring.kilyakov.domain.Question;
+import ru.otus.spring.kilyakov.service.impl.ConsoleServiceImpl;
 import ru.otus.spring.kilyakov.service.impl.StudentTestingServiceImpl;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.mock;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)
+@MockitoSettings(strictness = Strictness.STRICT_STUBS)
 public class StudentTestingServiceTest {
 
-    @Test
-    public void readQuestionsFailureTest() throws Exception {
-        CsvResourceDaoImpl csvResourceDao = mock(CsvResourceDaoImpl.class);
-        StudentTestingProperty studentTestingProperty = new StudentTestingProperty();
-        when(csvResourceDao.readAllQuestions()).thenThrow(new NullPointerException());
+    @Mock
+    CsvResourceDaoImpl csvResourceDao;
+    @Mock
+    StudentTestingProperty studentTestingProperty;
+    @Mock
+    ConsoleServiceImpl consoleService;
 
-        StudentTestingServiceImpl service = new StudentTestingServiceImpl(csvResourceDao, studentTestingProperty);
-        service.printAllQuestions();
-        assertThrows(NullPointerException.class, csvResourceDao::readAllQuestions);
+    private static List<Question> questions = new ArrayList<>();
 
-        List<Question> actual = service.getQuestions();
-        assertNull(actual);
+    @BeforeEach
+    public void beforeEach() throws Exception {
+        questions.add(Question.builder().question("2 x 2 = ?")
+                .answer1("4")
+                .answer2("6")
+                .answer3("2")
+                .rightAnswer(1)
+                .build());
     }
 
     @Test
-    public void readQuestionsTest() throws Exception {
-        CsvResourceDaoImpl csvResourceDao = mock(CsvResourceDaoImpl.class);
-        StudentTestingProperty studentTestingProperty = new StudentTestingProperty();
+    public void executeTestTest() throws Exception {
+        doReturn(questions).when(csvResourceDao).readAllQuestions();
+        doReturn("").when(studentTestingProperty).getTestFailureMessage();
+        doReturn("").when(studentTestingProperty).getTestPassedGoodMessage();
+        doReturn("").when(studentTestingProperty).getTestPassedExcellentMessage();
+        doReturn("").when(studentTestingProperty).getTestPassedSatisfactoryMessage();
 
-        List<Question> excepted = new ArrayList<>();
-        excepted.add(Question.builder().question("2 x 2 = ?").build());
-        when(csvResourceDao.readAllQuestions()).thenReturn(excepted);
-
-        StudentTestingServiceImpl service = new StudentTestingServiceImpl(csvResourceDao, studentTestingProperty);
-        service.printAllQuestions();
-        verify(csvResourceDao, times(1)).readAllQuestions();
-
-        List<Question> actual = service.getQuestions();
-        assertEquals(excepted, actual);
+        StudentTestingServiceImpl service = new StudentTestingServiceImpl(csvResourceDao, studentTestingProperty,
+                consoleService);
+        service.executeTest();
+        verify(consoleService, times(1)).readDigit(anyInt(), anyInt());
     }
 }
