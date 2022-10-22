@@ -2,40 +2,23 @@ package ru.otus.spring.kilyakov.config.property;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import ru.otus.spring.kilyakov.pojo.Mark;
 
-@Configuration
-@PropertySource("classpath:student-testing.properties")
 @Getter
 @Setter
+@ConfigurationProperties(prefix = "test")
 public class StudentTestingProperty {
 
-    @Value("${mark.bad}")
-    private Integer markBad;
+    private Integer passingThreshold;
 
-    @Value("${mark.satisfactory}")
-    private Integer markSatisfactory;
+    private String excellentMessage;
 
-    @Value("${mark.good}")
-    private Integer markGood;
+    private String goodMessage;
 
-    @Value("${mark.excellent}")
-    private Integer markExcellent;
+    private String satisfactoryMessage;
 
-    @Value("${test.passing.threshold}")
-    private String testPassingThreshold;
+    private String failureMessage;
 
-    @Value("${test.passed.excellent.message}")
-    private String testPassedExcellentMessage;
-
-    @Value("${test.passed.good.message}")
-    private String testPassedGoodMessage;
-
-    @Value("${test.passed.satisfactory.message}")
-    private String testPassedSatisfactoryMessage;
-
-    @Value("${test.failure.message}")
-    private String testFailureMessage;
+    private Mark mark;
 }

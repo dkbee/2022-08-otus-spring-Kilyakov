@@ -64,17 +64,17 @@ public class StudentTestingServiceImpl implements StudentTestingService {
     }
 
     private void outputRating(int score) {
-        if (score <= studentTestingProperty.getMarkBad()) {
-            ioService.writeString(MessageFormat.format(studentTestingProperty.getTestFailureMessage(), score));
+        if (score <= studentTestingProperty.getMark().getBad()) {
+            ioService.writeString(MessageFormat.format(studentTestingProperty.getFailureMessage(), score));
         }
-        if (score == studentTestingProperty.getMarkSatisfactory()) {
-            ioService.writeString(MessageFormat.format(studentTestingProperty.getTestPassedSatisfactoryMessage(),score));
+        if (score == studentTestingProperty.getMark().getSatisfactory()) {
+            ioService.writeString(MessageFormat.format(studentTestingProperty.getSatisfactoryMessage(),score));
         }
-        if (score == studentTestingProperty.getMarkGood()) {
-            ioService.writeString(MessageFormat.format(studentTestingProperty.getTestPassedGoodMessage(), score));
+        if (score == studentTestingProperty.getMark().getGood()) {
+            ioService.writeString(MessageFormat.format(studentTestingProperty.getGoodMessage(), score));
         }
-        if (score == studentTestingProperty.getMarkExcellent()) {
-            ioService.writeString(MessageFormat.format(studentTestingProperty.getTestPassedExcellentMessage(), score));
+        if (score == studentTestingProperty.getMark().getExcellent()) {
+            ioService.writeString(MessageFormat.format(studentTestingProperty.getExcellentMessage(), score));
         }
     }
 
