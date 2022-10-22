@@ -7,7 +7,7 @@ import ru.otus.spring.kilyakov.pojo.Mark;
 
 @Getter
 @Setter
-@ConfigurationProperties(prefix = "test")
+@ConfigurationProperties(prefix = "student-testing")
 public class StudentTestingProperty {
 
     private Integer passingThreshold;

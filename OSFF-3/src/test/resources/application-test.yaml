@@ -1,10 +1,10 @@
 application:
   localization:
-    locale: ru_RU
+    #locale: en
     default-path: i18n/test-cases.csv
-    locale-paths:
-      ru_RU: i18n/test-cases_ru_RU.csv
-      en: i18n/test-cases_en.csv
+    #locale-paths:
+      #ru_RU: i18n/test-cases_ru_RU.csv
+      #en: i18n/test-cases_en.csv
   hello-output: "Hello, {0}!"
 
 student-testing:

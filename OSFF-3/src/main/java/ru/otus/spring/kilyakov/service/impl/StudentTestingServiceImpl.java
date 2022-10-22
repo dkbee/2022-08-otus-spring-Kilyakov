@@ -23,7 +23,6 @@ public class StudentTestingServiceImpl implements StudentTestingService {
 
     private final IoService ioService;
 
-
     private List<Question> questions = null;
 
     public StudentTestingServiceImpl(CsvResourceDao csvResourceDao, StudentTestingProperty studentTestingProperty,
