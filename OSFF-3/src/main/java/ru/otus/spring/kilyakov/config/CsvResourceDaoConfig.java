@@ -7,15 +7,26 @@ import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
+import ru.otus.spring.kilyakov.config.property.LocalizationProperty;
 import ru.otus.spring.kilyakov.domain.Question;
 
 @Configuration
 public class CsvResourceDaoConfig {
 
+    private final LocalizationProperty localizationProperty;
+
+    public CsvResourceDaoConfig(LocalizationProperty localizationProperty) {
+        this.localizationProperty = localizationProperty;
+    }
+
     @Bean
     public FlatFileItemReader<Question> flatFileItemReader() {
         FlatFileItemReader<Question> flatFileItemReader = new FlatFileItemReader<>();
-        flatFileItemReader.setResource(new ClassPathResource("test-cases.csv"));
+        String path = localizationProperty.getDefaultPath();
+        if (localizationProperty.getLocalePaths() != null && localizationProperty.getLocale() != null) {
+            path = localizationProperty.getLocalePaths().get(localizationProperty.getLocale().toString());
+        }
+        flatFileItemReader.setResource(new ClassPathResource(path));
         DefaultLineMapper<Question> defaultLineMapper = new DefaultLineMapper<>();
         defaultLineMapper.setFieldSetMapper(new BeanWrapperFieldSetMapper<>() {{
             setTargetType(Question.class);

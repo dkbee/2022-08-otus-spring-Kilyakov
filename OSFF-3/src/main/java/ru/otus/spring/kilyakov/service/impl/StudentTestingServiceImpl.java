@@ -23,6 +23,7 @@ public class StudentTestingServiceImpl implements StudentTestingService {
 
     private final IoService ioService;
 
+
     private List<Question> questions = null;
 
     public StudentTestingServiceImpl(CsvResourceDao csvResourceDao, StudentTestingProperty studentTestingProperty,
@@ -68,7 +69,7 @@ public class StudentTestingServiceImpl implements StudentTestingService {
             ioService.writeString(MessageFormat.format(studentTestingProperty.getFailureMessage(), score));
         }
         if (score == studentTestingProperty.getMark().getSatisfactory()) {
-            ioService.writeString(MessageFormat.format(studentTestingProperty.getSatisfactoryMessage(),score));
+            ioService.writeString(MessageFormat.format(studentTestingProperty.getSatisfactoryMessage(), score));
         }
         if (score == studentTestingProperty.getMark().getGood()) {
             ioService.writeString(MessageFormat.format(studentTestingProperty.getGoodMessage(), score));

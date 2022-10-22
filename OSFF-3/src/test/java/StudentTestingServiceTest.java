@@ -5,6 +5,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
+import org.springframework.context.MessageSource;
 import ru.otus.spring.kilyakov.config.property.StudentTestingProperty;
 import ru.otus.spring.kilyakov.dao.impl.CsvResourceDaoImpl;
 import ru.otus.spring.kilyakov.domain.Question;
@@ -15,9 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.STRICT_STUBS)
@@ -29,6 +28,8 @@ public class StudentTestingServiceTest {
     StudentTestingProperty studentTestingProperty;
     @Mock
     ConsoleServiceImpl consoleService;
+    @Mock
+    MessageSource messageSource;
 
     private static List<Question> questions = new ArrayList<>();
 
@@ -45,10 +46,10 @@ public class StudentTestingServiceTest {
     @Test
     public void executeTestTest() throws Exception {
         doReturn(questions).when(csvResourceDao).readAllQuestions();
-        doReturn("").when(studentTestingProperty).getTestFailureMessage();
-        doReturn("").when(studentTestingProperty).getTestPassedGoodMessage();
-        doReturn("").when(studentTestingProperty).getTestPassedExcellentMessage();
-        doReturn("").when(studentTestingProperty).getTestPassedSatisfactoryMessage();
+        doReturn("").when(studentTestingProperty).getFailureMessage();
+        doReturn("").when(studentTestingProperty).getGoodMessage();
+        doReturn("").when(studentTestingProperty).getExcellentMessage();
+        doReturn("").when(studentTestingProperty).getSatisfactoryMessage();
 
         StudentTestingServiceImpl service = new StudentTestingServiceImpl(csvResourceDao, studentTestingProperty,
                 consoleService);

@@ -1,11 +1,10 @@
-spring:
-  messages:
-    basename: "i18n/appmessages"
-    encoding: "UTF-8"
-
 application:
-  message: "Test Props msg"
-  locale: ru_RU
+  localization:
+    locale: ru_RU
+    default-path: i18n/test-cases.csv
+    locale-paths:
+      ru_RU: i18n/test-cases_ru_RU.csv
+      en: i18n/test-cases_en.csv
   hello-output: "Hello, {0}!"
 
 test:
