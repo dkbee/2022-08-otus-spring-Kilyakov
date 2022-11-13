@@ -1,5 +1,6 @@
 package ru.otus.spring.kilyakov.dao.impl;
 
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
@@ -33,7 +34,8 @@ public class AuthorDaoJdbc implements AuthorDao {
 
     @Override
     public void insert(Author author) {
-        namedParameterJdbcOperations.update("insert into authors (id, name) values (:id, :name)",
+        namedParameterJdbcOperations.update("insert into authors (id, first_name, middle_name, last_name) values " +
+                        "(:id, :first_name, :middle_name, :last_name)",
                 Map.of("id", author.getId(), "name", author.getFirstName()));
     }
 
@@ -41,13 +43,15 @@ public class AuthorDaoJdbc implements AuthorDao {
     public Author getById(long id) {
         Map<String, Object> params = Collections.singletonMap("id", id);
         return namedParameterJdbcOperations.queryForObject(
-                "select id, name from authors where id = :id", params, new PersonMapper()
+                "select id, first_name, middle_name, last_name from authors where id = :id", params,
+                new AuthorMapper()
         );
     }
 
     @Override
     public List<Author> getAll() {
-        return namedParameterJdbcOperations.query("select id, name from authors", new PersonMapper());
+        return namedParameterJdbcOperations.query("select id, first_name, middle_name, last_name from authors",
+                new AuthorMapper());
     }
 
     @Override
@@ -58,7 +62,26 @@ public class AuthorDaoJdbc implements AuthorDao {
         );
     }
 
-    private static class PersonMapper implements RowMapper<Author> {
+    @Override
+    public Author findAuthor(Author author) {
+        try {
+            return namedParameterJdbcOperations.queryForObject(
+                    " select id, " +
+                            " first_name," +
+                            " middle_name, " +
+                            " last_name from authors " +
+                            " where lower(first_name) = lower(:first_name) " +
+                            " and lower(middle_name) = lower(:middle_name) " +
+                            " and lower(last_name) = lower(:last_name)",
+                    Map.of("first_name", author.getFirstName(), "middle_name", author.getMiddleName(),
+                            "last_name", author.getLastName()), new AuthorMapper()
+            );
+        } catch (EmptyResultDataAccessException ex) {
+            return null;
+        }
+    }
+
+    private static class AuthorMapper implements RowMapper<Author> {
 
         @Override
         public Author mapRow(ResultSet resultSet, int i) throws SQLException {

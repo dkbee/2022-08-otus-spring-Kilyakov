@@ -1,5 +1,6 @@
 package ru.otus.spring.kilyakov.dao.impl;
 
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
@@ -41,13 +42,13 @@ public class GenreDaoJdbc implements GenreDao {
     public Genre getById(long id) {
         Map<String, Object> params = Collections.singletonMap("id", id);
         return namedParameterJdbcOperations.queryForObject(
-                "select id, name from genres where id = :id", params, new PersonMapper()
+                "select id, name from genres where id = :id", params, new GenreMapper()
         );
     }
 
     @Override
     public List<Genre> getAll() {
-        return namedParameterJdbcOperations.query("select id, name from genres", new PersonMapper());
+        return namedParameterJdbcOperations.query("select id, name from genres", new GenreMapper());
     }
 
     @Override
@@ -58,7 +59,22 @@ public class GenreDaoJdbc implements GenreDao {
         );
     }
 
-    private static class PersonMapper implements RowMapper<Genre> {
+    @Override
+    public Genre findGenre(Genre genre) {
+        try {
+            return namedParameterJdbcOperations.queryForObject(
+                    " select id, " +
+                            " name " +
+                            " from genres " +
+                            " where lower(name) = lower(:name) ",
+                    Map.of("name", genre.getName()), new GenreDaoJdbc.GenreMapper()
+            );
+        } catch (EmptyResultDataAccessException ex) {
+            return null;
+        }
+    }
+
+    private static class GenreMapper implements RowMapper<Genre> {
 
         @Override
         public Genre mapRow(ResultSet resultSet, int i) throws SQLException {

@@ -1,5 +1,6 @@
 package ru.otus.spring.kilyakov.dao.impl;
 
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
@@ -15,6 +16,7 @@ import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @Repository
 public class BookDaoJdbc implements BookDao {
@@ -34,27 +36,48 @@ public class BookDaoJdbc implements BookDao {
     }
 
     @Override
-    public void insert(Book book) {
-        namedParameterJdbcOperations.update("insert into books (id, name, author_id, genre_id) values (:id, :name, :author_id, :genre_id)",
-                Map.of("id", book.getId(), "name", book.getName(), "author_id", book.getAuthor().getId(), "genre_id", book.getGenre().getId()));
+    public Book insert(Book book) {
+        int affectedRowsNumber = namedParameterJdbcOperations.update("insert into books (name, author_id, genre_id) values (:name, :author_id, :genre_id)",
+                Map.of( "name", book.getName(), "author_id", book.getAuthor().getId(), "genre_id", book.getGenre().getId()));
+        if (affectedRowsNumber != 0) {
+            return Book.builder()
+                    .name(book.getName())
+                    .author(book.getAuthor())
+                    .genre(book.getGenre()).build();
+        }
+        return null;
     }
 
     @Override
-    public Book getById(long id) {
+    public Book update(Book book) {
+        int affectedRowsNumber = namedParameterJdbcOperations.update("update books set name = :name, author_id = :author_id, genre_id = :genre_id where id = :id",
+                Map.of("id", book.getId(), "name", book.getName(), "author_id", book.getAuthor().getId(), "genre_id", book.getGenre().getId()));
+        if (affectedRowsNumber != 0) {
+            return book;
+        }
+        return null;
+    }
+
+    @Override
+    public Book getById(UUID id) {
         Map<String, Object> params = Collections.singletonMap("id", id);
-        return namedParameterJdbcOperations.queryForObject("select b.id as id, " +
-                "b.name as name, " +
-                "a.id as authorId," +
-                "a.first_name as firstName, " +
-                "a.middle_name as middleName, " +
-                "a.last_name as lastName, " +
-                "g.id as genreId, " +
-                "g.name as genreName " +
-                "from books b " +
-                "left join authors a on b.author_id = a.id " +
-                "left join genres g on b.genre_id = g.id " +
-                "where b.id = :id", params, new PersonMapper()
-        );
+        try {
+            return namedParameterJdbcOperations.queryForObject("select b.id as id, " +
+                    "b.name as name, " +
+                    "a.id as authorId," +
+                    "a.first_name as firstName, " +
+                    "a.middle_name as middleName, " +
+                    "a.last_name as lastName, " +
+                    "g.id as genreId, " +
+                    "g.name as genreName " +
+                    "from books b " +
+                    "left join authors a on b.author_id = a.id " +
+                    "left join genres g on b.genre_id = g.id " +
+                    "where b.id = :id", params, new BookMapper()
+            );
+        } catch (EmptyResultDataAccessException ex) {
+            return null;
+        }
     }
 
     @Override
@@ -69,18 +92,18 @@ public class BookDaoJdbc implements BookDao {
                 "g.name as genreName " +
                 "from books b " +
                 "left join authors a on b.author_id = a.id " +
-                "left join genres g on b.genre_id = g.id", new PersonMapper());
+                "left join genres g on b.genre_id = g.id", new BookMapper());
     }
 
     @Override
-    public void deleteById(long id) {
+    public int deleteById(UUID id) {
         Map<String, Object> params = Collections.singletonMap("id", id);
-        namedParameterJdbcOperations.update(
+        return namedParameterJdbcOperations.update(
                 "delete from books where id = :id", params
         );
     }
 
-    private static class PersonMapper implements RowMapper<Book> {
+    private static class BookMapper implements RowMapper<Book> {
 
         @Override
         public Book mapRow(ResultSet resultSet, int i) throws SQLException {
