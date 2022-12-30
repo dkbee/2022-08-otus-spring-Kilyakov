@@ -23,11 +23,10 @@ public class AuthorDaoJdbc implements AuthorDao {
 
     @Override
     public void insert(Author author) {
-        namedParameterJdbcOperations.update("insert into authors (id, first_name, middle_name, last_name) values " +
-                        "(:id, :first_name, :middle_name, :last_name)",
-                Map.of("id", author.getId(),
-                        "first_name", author.getFirstName(),
-                        "middle_name", author.getMiddleName(),
+        namedParameterJdbcOperations.update("insert into authors (first_name, middle_name, last_name) values " +
+                        "(:first_name, :middle_name, :last_name)",
+                Map.of("first_name", author.getFirstName(),
+                        "middle_name", author.getMiddleName() != null ? author.getMiddleName() : "",
                         "last_name", author.getLastName()
                 ));
     }
