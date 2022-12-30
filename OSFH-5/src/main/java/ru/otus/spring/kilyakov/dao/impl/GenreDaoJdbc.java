@@ -1,10 +1,7 @@
 package ru.otus.spring.kilyakov.dao.impl;
 
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
-import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 import ru.otus.spring.kilyakov.dao.GenreDao;
 import ru.otus.spring.kilyakov.domain.Genre;
@@ -25,16 +22,14 @@ public class GenreDaoJdbc implements GenreDao {
     }
 
     @Override
-    public int count() {
-        SqlParameterSource sqlParameterSource = new MapSqlParameterSource();
-        Integer count = namedParameterJdbcOperations.queryForObject("select count(*) from genres",
-                sqlParameterSource, Integer.class);
-        return count == null ? 0 : count;
+    public void insert(Genre genre) {
+        namedParameterJdbcOperations.update("insert into genres (id, name) values (:id, :name)",
+                Map.of("id", genre.getId(), "name", genre.getName()));
     }
 
     @Override
-    public void insert(Genre genre) {
-        namedParameterJdbcOperations.update("insert into genres (id, name) values (:id, :name)",
+    public void update(Genre genre) {
+        namedParameterJdbcOperations.update("update genres set name = :name where id = :id )",
                 Map.of("id", genre.getId(), "name", genre.getName()));
     }
 
@@ -57,21 +52,6 @@ public class GenreDaoJdbc implements GenreDao {
         namedParameterJdbcOperations.update(
                 "delete from genres where id = :id", params
         );
-    }
-
-    @Override
-    public Genre findGenre(Genre genre) {
-        try {
-            return namedParameterJdbcOperations.queryForObject(
-                    " select id, " +
-                            " name " +
-                            " from genres " +
-                            " where lower(name) = lower(:name) ",
-                    Map.of("name", genre.getName()), new GenreDaoJdbc.GenreMapper()
-            );
-        } catch (EmptyResultDataAccessException ex) {
-            return null;
-        }
     }
 
     private static class GenreMapper implements RowMapper<Genre> {

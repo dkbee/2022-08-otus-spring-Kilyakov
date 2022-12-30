@@ -7,9 +7,9 @@ import java.util.List;
 
 public interface AuthorDao {
 
-    int count();
-
     void insert(Author author);
+
+    void update(Author author);
 
     Author getById(long id);
 
@@ -17,5 +17,4 @@ public interface AuthorDao {
 
     void deleteById(long id);
 
-    Author findAuthor(Author author);
 }

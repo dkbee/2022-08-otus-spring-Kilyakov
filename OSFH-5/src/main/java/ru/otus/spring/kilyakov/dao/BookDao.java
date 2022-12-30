@@ -4,19 +4,16 @@ package ru.otus.spring.kilyakov.dao;
 import ru.otus.spring.kilyakov.domain.Book;
 
 import java.util.List;
-import java.util.UUID;
 
 public interface BookDao {
 
-    int count();
+    int insert(Book book);
 
-    Book insert(Book book);
+    int update(Book book);
 
-    Book update(Book book);
-
-    Book getById(UUID id);
+    Book getById(Long id);
 
     List<Book> getAll();
 
-    int deleteById(UUID id);
+    int deleteById(Long id);
 }

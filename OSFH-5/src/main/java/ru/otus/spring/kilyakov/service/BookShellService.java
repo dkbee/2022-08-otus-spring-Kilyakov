@@ -9,11 +9,11 @@ public interface BookShellService {
 
     public String insert(String name, Long authorId, Long bookId);
 
-    public Book getById(UUID id);
+    public Book getById(Long id);
 
     public List<Book> getAll();
 
-    public String update(String name, Long authorId, Long bookId);
+    public String update(Long bookId, String name, Long authorId, Long genreId);
 
-    public int delete(UUID id);
+    public String delete(Long id);
 }

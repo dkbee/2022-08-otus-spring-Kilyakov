@@ -2,9 +2,7 @@ package ru.otus.spring.kilyakov.dao.impl;
 
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
-import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
 import ru.otus.spring.kilyakov.dao.BookDao;
 import ru.otus.spring.kilyakov.domain.Author;
@@ -16,7 +14,6 @@ import java.sql.SQLException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 @Repository
 public class BookDaoJdbc implements BookDao {
@@ -28,38 +25,26 @@ public class BookDaoJdbc implements BookDao {
     }
 
     @Override
-    public int count() {
-        SqlParameterSource sqlParameterSource = new MapSqlParameterSource();
-        Integer count = namedParameterJdbcOperations.queryForObject("select count(*) from books",
-                sqlParameterSource, Integer.class);
-        return count == null ? 0 : count;
+    public int insert(Book book) {
+        return namedParameterJdbcOperations.update("insert into books (name, author_id, genre_id) values " +
+                        "(:name, :author_id, :genre_id)",
+                Map.of("name", book.getName(),
+                        "author_id", book.getAuthor().getId(),
+                        "genre_id", book.getGenre().getId()));
     }
 
     @Override
-    public Book insert(Book book) {
-        int affectedRowsNumber = namedParameterJdbcOperations.update("insert into books (name, author_id, genre_id) values (:name, :author_id, :genre_id)",
-                Map.of( "name", book.getName(), "author_id", book.getAuthor().getId(), "genre_id", book.getGenre().getId()));
-        if (affectedRowsNumber != 0) {
-            return Book.builder()
-                    .name(book.getName())
-                    .author(book.getAuthor())
-                    .genre(book.getGenre()).build();
-        }
-        return null;
+    public int update(Book book) {
+        return namedParameterJdbcOperations.update("update books set name = :name, author_id = :author_id, " +
+                        "genre_id = :genre_id where id = :id",
+                Map.of("id", book.getId(),
+                        "name", book.getName(),
+                        "author_id", book.getAuthor().getId(),
+                        "genre_id", book.getGenre().getId()));
     }
 
     @Override
-    public Book update(Book book) {
-        int affectedRowsNumber = namedParameterJdbcOperations.update("update books set name = :name, author_id = :author_id, genre_id = :genre_id where id = :id",
-                Map.of("id", book.getId(), "name", book.getName(), "author_id", book.getAuthor().getId(), "genre_id", book.getGenre().getId()));
-        if (affectedRowsNumber != 0) {
-            return book;
-        }
-        return null;
-    }
-
-    @Override
-    public Book getById(UUID id) {
+    public Book getById(Long id) {
         Map<String, Object> params = Collections.singletonMap("id", id);
         try {
             return namedParameterJdbcOperations.queryForObject("select b.id as id, " +
@@ -96,7 +81,7 @@ public class BookDaoJdbc implements BookDao {
     }
 
     @Override
-    public int deleteById(UUID id) {
+    public int deleteById(Long id) {
         Map<String, Object> params = Collections.singletonMap("id", id);
         return namedParameterJdbcOperations.update(
                 "delete from books where id = :id", params
