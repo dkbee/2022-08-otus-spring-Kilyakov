@@ -4,14 +4,15 @@ package ru.otus.spring.kilyakov.dao;
 import ru.otus.spring.kilyakov.domain.Book;
 
 import java.util.List;
+import java.util.Optional;
 
-public interface BookDao {
+public interface BookRepository {
 
-    int insert(Book book);
+    Book save(Book book);
 
-    int update(Book book);
+    Book update(Book book);
 
-    Book getById(Long id);
+    Optional<Book> getById(Long id);
 
     List<Book> getAll();
 

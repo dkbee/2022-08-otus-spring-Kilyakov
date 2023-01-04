@@ -6,27 +6,24 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
-@Table(name = "genres")
+@Table(name = "comments")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Genre {
+public class Comment {
     @Id
     private Long id;
+    @Column(name = "comment")
+    private String comment;
 
-    @Column(name = "name")
-    private String name;
-
-    @OneToMany
-    @JoinColumn(name = "author_id")
-    private List<Book> book;
+    @ManyToOne
+    private Book book;
 
     @Override
     public String toString() {
-        return "Id = " + this.id + ", Genre  = \"" + this.name + " ";
+        return "Id = " + this.id + ", Comment  = \"" + this.comment + "\" ";
     }
 }

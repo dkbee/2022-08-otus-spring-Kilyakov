@@ -8,6 +8,7 @@ import ru.otus.spring.kilyakov.domain.Genre;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -60,7 +61,7 @@ public class GenreDaoJdbc implements GenreDao {
         public Genre mapRow(ResultSet resultSet, int i) throws SQLException {
             long id = resultSet.getLong("id");
             String name = resultSet.getString("name");
-            return new Genre(id, name);
+            return new Genre(id, name, new ArrayList<>());
         }
     }
 }

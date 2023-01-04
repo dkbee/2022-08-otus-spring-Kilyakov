@@ -5,9 +5,11 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.stereotype.Repository;
 import ru.otus.spring.kilyakov.dao.AuthorDao;
 import ru.otus.spring.kilyakov.domain.Author;
+import ru.otus.spring.kilyakov.domain.Book;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -72,7 +74,7 @@ public class AuthorDaoJdbc implements AuthorDao {
             String firstName = resultSet.getString("first_name");
             String middleName = resultSet.getString("middle_name");
             String lastName = resultSet.getString("last_name");
-            return new Author(id, firstName, middleName, lastName);
+            return new Author(id, firstName, middleName, lastName, new ArrayList<>());
         }
     }
 }

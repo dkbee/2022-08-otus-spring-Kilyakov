@@ -1,17 +1,32 @@
 package ru.otus.spring.kilyakov.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 
-@RequiredArgsConstructor
+import javax.persistence.*;
+import java.util.List;
+
+@Entity
+@Table(name = "authors")
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class Author {
-    private final Long id;
-    private final String firstName;
-    private final String middleName;
-    private final String lastName;
+    @Id
+    private Long id;
+    @Column(name = "firstName")
+    private String firstName;
+    @Column(name = "middleName")
+    private String middleName;
+    @Column(name = "lastName")
+    private String lastName;
+
+    @OneToMany
+    @JoinColumn(name = "author_id")
+    private List<Book> book;
 
 
     @Override

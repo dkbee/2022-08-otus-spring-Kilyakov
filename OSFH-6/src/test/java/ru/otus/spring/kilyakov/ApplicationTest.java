@@ -5,20 +5,21 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import ru.otus.spring.kilyakov.dao.AuthorDao;
-import ru.otus.spring.kilyakov.dao.BookDao;
+import ru.otus.spring.kilyakov.dao.BookRepository;
 import ru.otus.spring.kilyakov.dao.GenreDao;
 import ru.otus.spring.kilyakov.domain.Author;
 import ru.otus.spring.kilyakov.domain.Book;
 import ru.otus.spring.kilyakov.domain.Genre;
 
 import java.util.List;
+import java.util.Optional;
 
 @SpringBootTest
 class ApplicationTest {
 
 
     @Autowired
-    BookDao bookDao;
+    BookRepository bookRepository;
 
     @Autowired
     GenreDao genreDao;
@@ -32,22 +33,22 @@ class ApplicationTest {
                 .author(Author.builder().id(1L).build())
                 .genre(Genre.builder().id(2L).build())
                 .build();
-        bookDao.insert(expected);
-        Book result = bookDao.getById(2L);
-        Assertions.assertNotNull(result);
-        Assertions.assertEquals(expected.getName(), result.getName());
+        bookRepository.save(expected);
+        Optional<Book> result = bookRepository.getById(2L);
+        Assertions.assertTrue(result.isPresent());
+        Assertions.assertEquals(expected.getName(), result.get().getName());
     }
 
     @Test
     public void getBookTest() {
-        Book result = bookDao.getById(1L);
-        Assertions.assertNotNull(result);
-        Assertions.assertEquals("Bro Code", result.getName());
+        Optional<Book> result = bookRepository.getById(1L);
+        Assertions.assertTrue(result.isPresent());
+        Assertions.assertEquals("Bro Code", result.get().getName());
     }
 
     @Test
     public void getAllBooksTest() {
-        List<Book> result = bookDao.getAll();
+        List<Book> result = bookRepository.getAll();
         Assertions.assertNotNull(result);
         Assertions.assertTrue(result.size() != 0);
     }
@@ -61,17 +62,17 @@ class ApplicationTest {
                 .author(Author.builder().id(3L).firstName("Anita").lastName("Appleby").build())
                 .genre(Genre.builder().id(2L).build())
                 .build();
-        bookDao.update(expected);
-        Book result = bookDao.getById(1L);
-        Assertions.assertNotNull(result);
-        Assertions.assertEquals(expected.getName(), result.getName());
-        Assertions.assertEquals(expected.getAuthor().getFirstName(), result.getAuthor().getFirstName());
+        bookRepository.update(expected);
+        Optional<Book> result = bookRepository.getById(1L);
+        Assertions.assertTrue(result.isPresent());
+        Assertions.assertEquals(expected.getName(), result.get().getName());
+        Assertions.assertEquals(expected.getAuthor().getFirstName(), result.get().getAuthor().getFirstName());
     }
 
     @Test
     public void deleteBookTest() {
-        bookDao.deleteById(1L);
-        Book result = bookDao.getById(1L);
+        bookRepository.deleteById(1L);
+        Optional<Book> result = bookRepository.getById(1L);
         Assertions.assertNull(result);
     }
 
