@@ -21,7 +21,7 @@ public class Genre {
     @Column(name = "name")
     private String name;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "author_id")
     private List<Book> book;
 

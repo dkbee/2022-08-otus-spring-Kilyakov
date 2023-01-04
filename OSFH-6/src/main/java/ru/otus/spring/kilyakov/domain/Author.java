@@ -24,7 +24,7 @@ public class Author {
     @Column(name = "lastName")
     private String lastName;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "author_id")
     private List<Book> book;
 

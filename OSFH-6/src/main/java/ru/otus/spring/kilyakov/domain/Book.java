@@ -20,9 +20,9 @@ public class Book {
     private Long id;
     @Column(name = "name")
     private String name;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Author author;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Genre genre;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
