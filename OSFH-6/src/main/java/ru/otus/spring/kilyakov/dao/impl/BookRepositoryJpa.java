@@ -38,11 +38,10 @@ public class BookRepositoryJpa implements BookRepository {
         return Optional.ofNullable(em.find(Book.class, id));
     }
 
-    @Transactional
     @Override
     public List<Book> getAll() {
-        TypedQuery<Book> query = em.createQuery("select b from Book b join fetch b.author join fetch b.genre " +
-                "join fetch b.comments", Book.class);
+        TypedQuery<Book> query = em.createQuery("select b from Book b join fetch b.author join fetch b.genre",
+                Book.class);
         return query.getResultList();
     }
 

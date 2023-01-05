@@ -1,9 +1,9 @@
 package ru.otus.spring.kilyakov.service;
 
 import ru.otus.spring.kilyakov.domain.Book;
+import ru.otus.spring.kilyakov.dto.BookDto;
 
 import java.util.List;
-import java.util.UUID;
 
 public interface BookShellService {
 
@@ -11,7 +11,7 @@ public interface BookShellService {
 
     public Book getById(Long id);
 
-    public List<Book> getAll();
+    public List<BookDto> getAll();
 
     public String update(Long bookId, String name, Long authorId, Long genreId);
 
