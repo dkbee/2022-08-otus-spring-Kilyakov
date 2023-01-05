@@ -2,13 +2,11 @@ package ru.otus.spring.kilyakov.repository.impl;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import ru.otus.spring.kilyakov.domain.Author;
-import ru.otus.spring.kilyakov.repository.CommentRepository;
 import ru.otus.spring.kilyakov.domain.Comment;
+import ru.otus.spring.kilyakov.repository.CommentRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.util.List;
 import java.util.Optional;

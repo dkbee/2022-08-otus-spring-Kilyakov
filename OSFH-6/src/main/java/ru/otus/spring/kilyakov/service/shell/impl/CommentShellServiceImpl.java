@@ -38,7 +38,7 @@ public class CommentShellServiceImpl implements CommentShellService {
     }
 
     @Override
-    @ShellMethod(value = "Get all books", key = {"--all --comment", "-a --comment"})
+    @ShellMethod(value = "Get all comments by book", key = {"--all --comment", "-a --comment"})
     public List<CommentDto> getAll(Long bookId) {
         return commentService.getAll(bookId);
     }
