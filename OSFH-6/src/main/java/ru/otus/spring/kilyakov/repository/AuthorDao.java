@@ -1,4 +1,4 @@
-package ru.otus.spring.kilyakov.dao;
+package ru.otus.spring.kilyakov.repository;
 
 
 import ru.otus.spring.kilyakov.domain.Author;

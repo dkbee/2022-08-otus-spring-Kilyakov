@@ -1,8 +1,8 @@
-package ru.otus.spring.kilyakov.dao.impl;
+package ru.otus.spring.kilyakov.repository.impl;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import ru.otus.spring.kilyakov.dao.CommentRepository;
+import ru.otus.spring.kilyakov.repository.CommentRepository;
 import ru.otus.spring.kilyakov.domain.Comment;
 
 import javax.persistence.EntityManager;

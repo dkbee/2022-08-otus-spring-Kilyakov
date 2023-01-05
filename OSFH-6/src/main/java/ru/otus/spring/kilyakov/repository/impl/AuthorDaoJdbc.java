@@ -1,11 +1,10 @@
-package ru.otus.spring.kilyakov.dao.impl;
+package ru.otus.spring.kilyakov.repository.impl;
 
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.stereotype.Repository;
-import ru.otus.spring.kilyakov.dao.AuthorDao;
+import ru.otus.spring.kilyakov.repository.AuthorDao;
 import ru.otus.spring.kilyakov.domain.Author;
-import ru.otus.spring.kilyakov.domain.Book;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

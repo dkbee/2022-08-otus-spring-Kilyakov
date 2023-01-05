@@ -3,7 +3,7 @@ package ru.otus.spring.kilyakov.service.impl;
 import org.h2.tools.Console;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
-import ru.otus.spring.kilyakov.dao.BookRepository;
+import ru.otus.spring.kilyakov.repository.BookRepository;
 import ru.otus.spring.kilyakov.domain.Author;
 import ru.otus.spring.kilyakov.domain.Book;
 import ru.otus.spring.kilyakov.domain.Genre;
@@ -13,7 +13,6 @@ import ru.otus.spring.kilyakov.service.BookShellService;
 
 import java.sql.SQLException;
 import java.util.List;
-import java.util.Optional;
 
 @ShellComponent
 public class BookShellServiceImpl implements BookShellService {
@@ -25,11 +24,10 @@ public class BookShellServiceImpl implements BookShellService {
         this.bookService = bookService;
     }
 
-
     @Override
     @ShellMethod(value = "Insert book", key = {"--insert --book", "-i --book"})
-    public String insert(String name, Long authorId, Long genreId) {
-        return "Count of books inserted: " + bookService.save(Book.builder()
+    public BookDto insert(String name, Long authorId, Long genreId) {
+        return bookService.save(Book.builder()
                 .name(name)
                 .author(Author.builder().id(authorId).build())
                 .genre(Genre.builder().id(genreId).build())
@@ -38,22 +36,20 @@ public class BookShellServiceImpl implements BookShellService {
 
     @Override
     @ShellMethod(value = "Get book by id", key = {"--get --book", "-g --book"})
-    public Book getById(Long id) {
-        Optional<Book> book = bookService.getById(id);
-        return book.orElse(null);
+    public BookDto getById(Long id) {
+        return bookService.getById(id);
     }
 
     @Override
     @ShellMethod(value = "Get all books", key = {"--all --book", "-a --book"})
     public List<BookDto> getAll() {
-        List<BookDto> books = bookService.getAll();
-        return books;
+        return bookService.getAll();
     }
 
     @Override
     @ShellMethod(value = "Update book", key = {"--update --book", "-u --book"})
-    public String update(Long bookId, String name, Long authorId, Long genreId) {
-        return "Count of books updated: " + bookService.update(Book.builder()
+    public BookDto update(Long bookId, String name, Long authorId, Long genreId) {
+        return bookService.update(Book.builder()
                 .id(bookId)
                 .name(name)
                 .author(Author.builder().id(authorId).build())
@@ -63,8 +59,8 @@ public class BookShellServiceImpl implements BookShellService {
 
     @Override
     @ShellMethod(value = "Delete book", key = {"--delete --book", "-d --book"})
-    public String delete(Long id) {
-        return "Count of books deleted: " + bookService.deleteById(id);
+    public BookDto delete(Long id) {
+        return bookService.deleteById(id);
     }
 
     @ShellMethod(value = "Start console", key = {"-sc"})

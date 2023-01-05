@@ -1,9 +1,9 @@
-package ru.otus.spring.kilyakov.dao.impl;
+package ru.otus.spring.kilyakov.repository.impl;
 
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcOperations;
 import org.springframework.stereotype.Repository;
-import ru.otus.spring.kilyakov.dao.GenreDao;
+import ru.otus.spring.kilyakov.repository.GenreDao;
 import ru.otus.spring.kilyakov.domain.Genre;
 
 import java.sql.ResultSet;

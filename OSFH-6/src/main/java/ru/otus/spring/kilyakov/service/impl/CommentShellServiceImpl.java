@@ -3,7 +3,7 @@ package ru.otus.spring.kilyakov.service.impl;
 import org.h2.tools.Console;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
-import ru.otus.spring.kilyakov.dao.CommentRepository;
+import ru.otus.spring.kilyakov.repository.CommentRepository;
 import ru.otus.spring.kilyakov.domain.Book;
 import ru.otus.spring.kilyakov.domain.Comment;
 import ru.otus.spring.kilyakov.service.CommentShellService;

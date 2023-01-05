@@ -30,20 +30,4 @@ public class Book {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "book_id")
     private List<Comment> comments;
-
-    @Override
-    public String toString() {
-        StringBuilder stringBuilder = new StringBuilder();
-        comments.forEach(comment -> {
-                    stringBuilder.append("\"");
-                    stringBuilder.append(comment.getComment());
-                    stringBuilder.append("\", ");
-                }
-        );
-        if (stringBuilder.length() > 2) {
-            stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length());
-        }
-        return "Id = " + this.id + ", Name = \"" + this.name + "\", Author = " + author.toString() + ", Genre = "
-                + genre.toString() + "\", Comments: [" + stringBuilder + "] ";
-    }
 }

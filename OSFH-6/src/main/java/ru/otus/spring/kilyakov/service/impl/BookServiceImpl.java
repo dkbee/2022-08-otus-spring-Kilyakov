@@ -2,7 +2,7 @@ package ru.otus.spring.kilyakov.service.impl;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.otus.spring.kilyakov.dao.BookRepository;
+import ru.otus.spring.kilyakov.repository.BookRepository;
 import ru.otus.spring.kilyakov.domain.Book;
 import ru.otus.spring.kilyakov.dto.BookDto;
 import ru.otus.spring.kilyakov.service.BookService;
@@ -19,19 +19,26 @@ public class BookServiceImpl implements BookService {
         this.bookRepository = bookRepository;
     }
 
+    @Transactional
     @Override
-    public Book save(Book book) {
-        return bookRepository.save(book);
+    public BookDto save(Book book) {
+        Book savedBook = bookRepository.save(book);
+        return getBookDto(savedBook);
     }
 
+    @Transactional
     @Override
-    public Book update(Book book) {
-        return bookRepository.update(book);
+    public BookDto update(Book book) {
+        Book updatedBook = bookRepository.update(book);
+        return getBookDto(updatedBook);
     }
 
+    @Transactional
     @Override
-    public Optional<Book> getById(Long id) {
-        return bookRepository.getById(id);
+    public BookDto getById(Long id) {
+        Optional<Book> bookOptional = bookRepository.getById(id);
+        Book book = bookOptional.orElse(null);
+        return getBookDto(book);
     }
 
     @Transactional
@@ -47,8 +54,24 @@ public class BookServiceImpl implements BookService {
         return bookDtoList;
     }
 
+    @Transactional
     @Override
-    public int deleteById(Long id) {
-        return bookRepository.deleteById(id);
+    public BookDto deleteById(Long id) {
+        Book book = bookRepository.deleteById(id);
+        return getBookDto(book);
+    }
+
+    private static BookDto getBookDto(Book book) {
+        BookDto bookDto = new BookDto();
+        if (book != null) {
+            bookDto = BookDto.builder()
+                    .id(book.getId())
+                    .name(book.getName())
+                    .author(book.getAuthor())
+                    .genre(book.getGenre())
+                    .comments(book.getComments() != null && book.getComments().size() > 0 ? book.getComments() : null)
+                    .build();
+        }
+        return bookDto;
     }
 }

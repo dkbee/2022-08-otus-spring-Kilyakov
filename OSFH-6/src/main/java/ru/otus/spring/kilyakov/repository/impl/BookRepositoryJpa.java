@@ -1,11 +1,12 @@
-package ru.otus.spring.kilyakov.dao.impl;
+package ru.otus.spring.kilyakov.repository.impl;
 
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
-import ru.otus.spring.kilyakov.dao.BookRepository;
+import ru.otus.spring.kilyakov.repository.BookRepository;
 import ru.otus.spring.kilyakov.domain.Book;
 
-import javax.persistence.*;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,20 +20,17 @@ public class BookRepositoryJpa implements BookRepository {
         this.em = em;
     }
 
-    @Transactional
     @Override
     public Book save(Book book) {
         em.persist(book);
         return book;
     }
 
-    @Transactional
     @Override
     public Book update(Book book) {
         return em.merge(book);
     }
 
-    @Transactional
     @Override
     public Optional<Book> getById(Long id) {
         return Optional.ofNullable(em.find(Book.class, id));
@@ -45,13 +43,12 @@ public class BookRepositoryJpa implements BookRepository {
         return query.getResultList();
     }
 
-    @Transactional
     @Override
-    public int deleteById(Long id) {
-        Query query = em.createQuery("delete " +
-                "from books b " +
-                "where b.id = :id");
-        query.setParameter("id", id);
-        return query.executeUpdate();
+    public Book deleteById(Long id) {
+        Book book = em.find(Book.class, id);
+        if (book != null) {
+            em.remove(book);
+        }
+        return book;
     }
 }

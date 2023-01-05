@@ -1,4 +1,4 @@
-package ru.otus.spring.kilyakov.dao;
+package ru.otus.spring.kilyakov.repository;
 
 
 import ru.otus.spring.kilyakov.domain.Book;
@@ -16,5 +16,5 @@ public interface BookRepository {
 
     List<Book> getAll();
 
-    int deleteById(Long id);
+    Book deleteById(Long id);
 }

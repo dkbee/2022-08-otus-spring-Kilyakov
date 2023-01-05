@@ -7,13 +7,13 @@ import java.util.List;
 import java.util.Optional;
 
 public interface BookService {
-    Book save(Book book);
+    BookDto save(Book book);
 
-    Book update(Book book);
+    BookDto update(Book book);
 
-    Optional<Book> getById(Long id);
+    BookDto getById(Long id);
 
     List<BookDto> getAll();
 
-    int deleteById(Long id);
+    BookDto deleteById(Long id);
 }
