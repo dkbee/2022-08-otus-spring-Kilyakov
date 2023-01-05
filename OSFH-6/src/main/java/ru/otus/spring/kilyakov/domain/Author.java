@@ -16,6 +16,7 @@ import java.util.List;
 @Builder
 public class Author {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "firstName")
     private String firstName;

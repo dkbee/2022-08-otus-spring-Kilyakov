@@ -5,3 +5,5 @@ insert into genres (name) values ('Fantasy');
 insert into genres (name) values ('Manual');
 
 insert into books (name, author_id, genre_id) values ('Bro Code', 1, 2);
+
+insert into comments (comment, book_id) values ('blablabla', 1);
