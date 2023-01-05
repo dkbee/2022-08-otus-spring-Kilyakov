@@ -47,6 +47,7 @@ public class BookServiceImpl implements BookService {
         List<Book> books = bookRepository.getAll();
         List<BookDto> bookDtoList = new ArrayList<>();
         books.forEach(book -> bookDtoList.add(BookDto.builder()
+                .id(book.getId())
                 .name(book.getName())
                 .genre(book.getGenre())
                 .author(book.getAuthor())

@@ -22,9 +22,4 @@ public class Comment {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Book book;
-
-    @Override
-    public String toString() {
-        return "Id = " + this.id + ", Comment  = \"" + this.comment + "\" ";
-    }
 }

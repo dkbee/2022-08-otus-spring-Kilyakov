@@ -48,7 +48,8 @@ public class CommentServiceImpl implements CommentService {
         List<Comment> comments = commentRepository.getAll(bookId);
         List<CommentDto> bookDtoList = new ArrayList<>();
         comments.forEach(comment -> bookDtoList.add(CommentDto.builder()
-                .name(comment.getComment())
+                .id(comment.getId())
+                .comment(comment.getComment())
                 .build()));
         return bookDtoList;
     }
@@ -65,7 +66,8 @@ public class CommentServiceImpl implements CommentService {
         if (comment != null) {
             commentDto = CommentDto.builder()
                     .id(comment.getId())
-                    .comments(comment.getBook().getComments())
+                    .comment(comment.getComment())
+                    .bookName(comment.getBook().getName())
                     .build();
         }
         return commentDto;
