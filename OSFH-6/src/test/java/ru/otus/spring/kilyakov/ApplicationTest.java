@@ -4,9 +4,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import ru.otus.spring.kilyakov.repository.AuthorDao;
+import ru.otus.spring.kilyakov.repository.AuthorRepository;
 import ru.otus.spring.kilyakov.repository.BookRepository;
-import ru.otus.spring.kilyakov.repository.GenreDao;
+import ru.otus.spring.kilyakov.repository.GenreRepository;
 import ru.otus.spring.kilyakov.domain.Author;
 import ru.otus.spring.kilyakov.domain.Book;
 import ru.otus.spring.kilyakov.domain.Genre;
@@ -22,10 +22,10 @@ class ApplicationTest {
     BookRepository bookRepository;
 
     @Autowired
-    GenreDao genreDao;
+    GenreRepository genreDao;
 
     @Autowired
-    AuthorDao authorDao;
+    AuthorRepository authorDao;
 
     @Test
     public void insertBookTest() {

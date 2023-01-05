@@ -5,7 +5,7 @@ import ru.otus.spring.kilyakov.domain.Author;
 
 import java.util.List;
 
-public interface AuthorDao {
+public interface AuthorRepository {
 
     void insert(Author author);
 

@@ -1,4 +1,4 @@
-package ru.otus.spring.kilyakov.service;
+package ru.otus.spring.kilyakov.service.shell;
 
 import ru.otus.spring.kilyakov.dto.BookDto;
 

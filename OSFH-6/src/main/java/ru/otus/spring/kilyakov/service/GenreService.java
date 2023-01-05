@@ -1,11 +1,11 @@
-package ru.otus.spring.kilyakov.repository;
+package ru.otus.spring.kilyakov.service;
 
 
 import ru.otus.spring.kilyakov.domain.Genre;
 
 import java.util.List;
 
-public interface GenreDao {
+public interface GenreService {
 
     void insert(Genre genre);
 
@@ -16,4 +16,5 @@ public interface GenreDao {
     List<Genre> getAll();
 
     void deleteById(long id);
+
 }

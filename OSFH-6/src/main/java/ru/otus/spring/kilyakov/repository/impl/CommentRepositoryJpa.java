@@ -2,6 +2,7 @@ package ru.otus.spring.kilyakov.repository.impl;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import ru.otus.spring.kilyakov.domain.Author;
 import ru.otus.spring.kilyakov.repository.CommentRepository;
 import ru.otus.spring.kilyakov.domain.Comment;
 
@@ -43,18 +44,20 @@ public class CommentRepositoryJpa implements CommentRepository {
 
     @Transactional
     @Override
-    public List<Comment> getAll() {
-        TypedQuery<Comment> query = em.createQuery("select c from Comment c", Comment.class);
+    public List<Comment> getAll(Long bookId) {
+        TypedQuery<Comment> query = em.createQuery("select c from Comment c where c.book.id = :bookId",
+                Comment.class);
+        query.setParameter("bookId", bookId);
         return query.getResultList();
     }
 
     @Transactional
     @Override
-    public int deleteById(Long id) {
-        Query query = em.createQuery("delete " +
-                "from comments c " +
-                "where c.id = :id");
-        query.setParameter("id", id);
-        return query.executeUpdate();
+    public Comment deleteById(Long id) {
+        Comment comment = em.find(Comment.class, id);
+        if (comment != null) {
+            em.remove(comment);
+        }
+        return comment;
     }
 }

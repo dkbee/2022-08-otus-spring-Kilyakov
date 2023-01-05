@@ -1,4 +1,4 @@
-package ru.otus.spring.kilyakov.service.impl;
+package ru.otus.spring.kilyakov.service.shell.impl;
 
 import org.h2.tools.Console;
 import org.springframework.shell.standard.ShellComponent;
@@ -9,7 +9,7 @@ import ru.otus.spring.kilyakov.domain.Book;
 import ru.otus.spring.kilyakov.domain.Genre;
 import ru.otus.spring.kilyakov.dto.BookDto;
 import ru.otus.spring.kilyakov.service.BookService;
-import ru.otus.spring.kilyakov.service.BookShellService;
+import ru.otus.spring.kilyakov.service.shell.BookShellService;
 
 import java.sql.SQLException;
 import java.util.List;
