@@ -11,11 +11,8 @@ public interface CommentShellService {
 
     public CommentDto getById(Long id);
 
-    public List<CommentDto> getAll(Long bookId);
-
     public CommentDto update(Long commentId, String comment, Long bookId);
 
     public void delete(Long id);
 
-    public void deleteAll(Long bookId);
 }
