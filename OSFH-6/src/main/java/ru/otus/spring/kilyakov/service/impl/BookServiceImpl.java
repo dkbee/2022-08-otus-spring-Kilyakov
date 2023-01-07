@@ -36,7 +36,6 @@ public class BookServiceImpl implements BookService {
         return getBookDto(updatedBook);
     }
 
-    @Transactional(readOnly = true)
     @Override
     public BookDto getById(Long id) {
         Optional<Book> bookOptional = bookRepository.getById(id);
@@ -44,7 +43,6 @@ public class BookServiceImpl implements BookService {
         return getBookDto(book);
     }
 
-    @Transactional(readOnly = true)
     @Override
     public List<BookDto> getAll() {
         List<Book> books = bookRepository.getAll();

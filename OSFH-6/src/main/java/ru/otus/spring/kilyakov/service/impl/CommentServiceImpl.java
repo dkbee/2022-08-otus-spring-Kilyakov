@@ -34,7 +34,6 @@ public class CommentServiceImpl implements CommentService {
         return getCommentDto(updatedComment);
     }
 
-    @Transactional(readOnly = true)
     @Override
     public CommentDto getById(Long id) {
         Optional<Comment> bookOptional = commentRepository.getById(id);
@@ -42,7 +41,6 @@ public class CommentServiceImpl implements CommentService {
         return getCommentDto(comment);
     }
 
-    @Transactional(readOnly = true)
     @Override
     public List<CommentDto> getAllForBook(Long bookId) {
         List<Comment> comments = commentRepository.getAllForBook(bookId);
