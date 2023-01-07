@@ -9,3 +9,5 @@ insert into books (name, author_id, genre_id) values ('123', 1, 1);
 
 insert into comments (comment, book_id) values ('blablabla', 1);
 insert into comments (comment, book_id) values ('tralala', 1);
+insert into comments (comment, book_id) values ('nice', 2);
+insert into comments (comment, book_id) values ('terrible', 2);

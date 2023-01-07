@@ -34,7 +34,7 @@ public class CommentServiceImpl implements CommentService {
         return getCommentDto(updatedComment);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     @Override
     public CommentDto getById(Long id) {
         Optional<Comment> bookOptional = commentRepository.getById(id);
@@ -42,16 +42,16 @@ public class CommentServiceImpl implements CommentService {
         return getCommentDto(comment);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     @Override
     public List<CommentDto> getAll(Long bookId) {
         List<Comment> comments = commentRepository.getAll(bookId);
-        List<CommentDto> bookDtoList = new ArrayList<>();
-        comments.forEach(comment -> bookDtoList.add(CommentDto.builder()
+        List<CommentDto> commentDtoList = new ArrayList<>();
+        comments.forEach(comment -> commentDtoList.add(CommentDto.builder()
                 .id(comment.getId())
                 .comment(comment.getComment())
                 .build()));
-        return bookDtoList;
+        return commentDtoList;
     }
 
     @Transactional
@@ -59,6 +59,12 @@ public class CommentServiceImpl implements CommentService {
     public CommentDto deleteById(Long id) {
         Comment comment = commentRepository.deleteById(id);
         return getCommentDto(comment);
+    }
+
+    @Transactional
+    @Override
+    public int deleteAll(Long bookId) {
+        return commentRepository.deleteAll(bookId);
     }
 
     private static CommentDto getCommentDto(Comment comment) {

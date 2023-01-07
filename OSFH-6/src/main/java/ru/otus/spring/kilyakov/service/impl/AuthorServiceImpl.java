@@ -29,13 +29,13 @@ public class AuthorServiceImpl implements AuthorService {
         authorRepository.update(author);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     @Override
     public Author getById(long id) {
         return authorRepository.getById(id);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     @Override
     public List<Author> getAll() {
         return authorRepository.getAll();

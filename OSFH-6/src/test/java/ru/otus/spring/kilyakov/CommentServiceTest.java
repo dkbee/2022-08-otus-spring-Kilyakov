@@ -41,12 +41,12 @@ class CommentServiceTest {
     @Test
     public void getCommentTest() {
         Optional<Comment> actual = commentRepository.getById(1L);
-        Comment expectedBook = em.find(Comment.class, 1L);
-        Assertions.assertNotNull(expectedBook);
+        Comment expectedComment = em.find(Comment.class, 1L);
+        Assertions.assertNotNull(expectedComment);
         Assertions.assertTrue(actual.isPresent());
-        Assertions.assertEquals(expectedBook.getComment(), actual.get().getComment());
+        Assertions.assertEquals(expectedComment.getComment(), actual.get().getComment());
         assertThat(actual).isPresent().get()
-                .usingRecursiveComparison().isEqualTo(expectedBook);
+                .usingRecursiveComparison().isEqualTo(expectedComment);
     }
 
     @Test
@@ -69,16 +69,24 @@ class CommentServiceTest {
                 .comment("Cool book")
                 .build();
         commentRepository.update(expected);
-        Comment expectedBook = em.find(Comment.class, 1L);
-        Assertions.assertNotNull(expectedBook);
-        Assertions.assertEquals(expected.getComment(), expectedBook.getComment());
+        Comment expectedComment = em.find(Comment.class, 1L);
+        Assertions.assertNotNull(expectedComment);
+        Assertions.assertEquals(expected.getComment(), expectedComment.getComment());
     }
 
     @Test
     public void deleteCommentTest() {
         commentRepository.deleteById(1L);
-        Comment expectedBook = em.find(Comment.class, 1L);
-        Assertions.assertNull(expectedBook);
+        Comment expectedComment = em.find(Comment.class, 1L);
+        Assertions.assertNull(expectedComment);
+    }
+
+    @Test
+    public void deleteAllCommentsTest() {
+        commentRepository.deleteAll(1L);
+        Book expectedBook = em.find(Book.class, 1L);
+        Assertions.assertNotNull(expectedBook);
+        Assertions.assertTrue(expectedBook.getComments() == null || expectedBook.getComments().size() == 0);
     }
 
 }

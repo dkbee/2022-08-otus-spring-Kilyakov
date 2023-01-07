@@ -29,13 +29,13 @@ public class GenreServiceImpl implements GenreService {
         genreRepository.update(genre);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     @Override
     public Genre getById(long id) {
         return genreRepository.getById(id);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     @Override
     public List<Genre> getAll() {
         return genreRepository.getAll();

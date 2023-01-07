@@ -59,6 +59,12 @@ public class CommentShellServiceImpl implements CommentShellService {
         return commentService.deleteById(id);
     }
 
+    @Override
+    @ShellMethod(value = "Delete comment", key = {"--delete --all --comment", "-d -a --comment"})
+    public int deleteAll(Long bookId) {
+        return commentService.deleteAll(bookId);
+    }
+
     @ShellMethod(value = "Start console", key = {"-sc"})
     public void startConsole() throws SQLException {
         Console.main();

@@ -15,4 +15,6 @@ public interface CommentService {
     List<CommentDto> getAll(Long bookId);
 
     CommentDto deleteById(Long id);
+
+    int deleteAll(Long bookId);
 }

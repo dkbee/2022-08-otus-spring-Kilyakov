@@ -6,6 +6,7 @@ import ru.otus.spring.kilyakov.repository.BookRepository;
 import ru.otus.spring.kilyakov.domain.Book;
 import ru.otus.spring.kilyakov.dto.BookDto;
 import ru.otus.spring.kilyakov.service.BookService;
+import ru.otus.spring.kilyakov.service.CommentService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,9 +15,11 @@ import java.util.Optional;
 @Service
 public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
+    private final CommentService commentService;
 
-    public BookServiceImpl(BookRepository bookRepository) {
+    public BookServiceImpl(BookRepository bookRepository, CommentService commentService) {
         this.bookRepository = bookRepository;
+        this.commentService = commentService;
     }
 
     @Transactional
@@ -33,7 +36,7 @@ public class BookServiceImpl implements BookService {
         return getBookDto(updatedBook);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     @Override
     public BookDto getById(Long id) {
         Optional<Book> bookOptional = bookRepository.getById(id);
@@ -41,7 +44,7 @@ public class BookServiceImpl implements BookService {
         return getBookDto(book);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     @Override
     public List<BookDto> getAll() {
         List<Book> books = bookRepository.getAll();
@@ -58,6 +61,7 @@ public class BookServiceImpl implements BookService {
     @Transactional
     @Override
     public BookDto deleteById(Long id) {
+        commentService.deleteAll(id);
         Book book = bookRepository.deleteById(id);
         return getBookDto(book);
     }

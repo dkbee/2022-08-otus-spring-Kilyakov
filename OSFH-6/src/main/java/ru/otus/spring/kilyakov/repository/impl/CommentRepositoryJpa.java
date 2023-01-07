@@ -7,6 +7,7 @@ import ru.otus.spring.kilyakov.repository.CommentRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.util.List;
 import java.util.Optional;
@@ -57,5 +58,12 @@ public class CommentRepositoryJpa implements CommentRepository {
             em.remove(comment);
         }
         return comment;
+    }
+    @Transactional
+    @Override
+    public int deleteAll(Long bookId) {
+        Query query = em.createQuery("delete from Comment c where c.book.id = :bookId");
+        query.setParameter("bookId", bookId);
+        return query.executeUpdate();
     }
 }

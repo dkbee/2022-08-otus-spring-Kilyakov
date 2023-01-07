@@ -27,7 +27,7 @@ public class Book {
     @ManyToOne(fetch = FetchType.EAGER)
     private Genre genre;
     @Fetch(FetchMode.SUBSELECT)
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "book_id")
     private List<Comment> comments;
 }
