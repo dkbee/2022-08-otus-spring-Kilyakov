@@ -14,5 +14,5 @@ public interface BookShellService {
 
     public BookDto update(Long bookId, String name, Long authorId, Long genreId);
 
-    public BookDto delete(Long id);
+    public void delete(Long id);
 }

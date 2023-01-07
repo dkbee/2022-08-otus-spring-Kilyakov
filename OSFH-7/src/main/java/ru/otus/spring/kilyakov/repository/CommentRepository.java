@@ -1,22 +1,14 @@
 package ru.otus.spring.kilyakov.repository;
 
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import ru.otus.spring.kilyakov.domain.Comment;
 
 import java.util.List;
-import java.util.Optional;
 
-public interface CommentRepository {
+public interface CommentRepository extends JpaRepository<Comment, Long> {
 
-    Comment save(Comment comment);
+    List<Comment> findAllByBookId(Long bookId);
 
-    Comment update(Comment comment);
-
-    Optional<Comment> getById(Long id);
-
-    List<Comment> getAllForBook(Long bookId);
-
-    Comment deleteById(Long id);
-
-    int deleteAllForBook(Long bookId);
+    List<Comment> deleteAllByBookId(Long bookId);
 }

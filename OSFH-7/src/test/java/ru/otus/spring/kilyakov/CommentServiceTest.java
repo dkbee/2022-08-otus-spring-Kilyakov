@@ -83,7 +83,7 @@ class CommentServiceTest {
 
     @Test
     public void deleteAllCommentsForBookTest() {
-        commentRepository.deleteAllForBook(1L);
+        commentRepository.deleteAllByBookId(1L);
         Book expectedBook = em.find(Book.class, 1L);
         Assertions.assertNotNull(expectedBook);
         Assertions.assertTrue(expectedBook.getComments() == null || expectedBook.getComments().size() == 0);

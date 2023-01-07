@@ -2,6 +2,7 @@ package ru.otus.spring.kilyakov.service.impl;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.otus.spring.kilyakov.domain.Comment;
 import ru.otus.spring.kilyakov.repository.BookRepository;
 import ru.otus.spring.kilyakov.domain.Book;
 import ru.otus.spring.kilyakov.dto.BookDto;
@@ -32,20 +33,20 @@ public class BookServiceImpl implements BookService {
     @Transactional
     @Override
     public BookDto update(Book book) {
-        Book updatedBook = bookRepository.update(book);
+        Book updatedBook = bookRepository.save(book);
         return getBookDto(updatedBook);
     }
-
+    @Transactional(readOnly = true)
     @Override
     public BookDto getById(Long id) {
-        Optional<Book> bookOptional = bookRepository.getById(id);
+        Optional<Book> bookOptional = bookRepository.findById(id);
         Book book = bookOptional.orElse(null);
         return getBookDto(book);
     }
 
     @Override
     public List<BookDto> getAll() {
-        List<Book> books = bookRepository.getAll();
+        List<Book> books = bookRepository.findAll();
         List<BookDto> bookDtoList = new ArrayList<>();
         books.forEach(book -> bookDtoList.add(BookDto.builder()
                 .id(book.getId())
@@ -58,10 +59,9 @@ public class BookServiceImpl implements BookService {
 
     @Transactional
     @Override
-    public BookDto deleteById(Long id) {
-        commentService.deleteAllForBook(id);
-        Book book = bookRepository.deleteById(id);
-        return getBookDto(book);
+    public void deleteById(Long id) {
+        commentService.deleteByBookId(id);
+        bookRepository.deleteById(id);
     }
 
     private static BookDto getBookDto(Book book) {

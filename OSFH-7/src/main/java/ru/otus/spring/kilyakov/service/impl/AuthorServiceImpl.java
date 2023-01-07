@@ -20,23 +20,23 @@ public class AuthorServiceImpl implements AuthorService {
     @Transactional
     @Override
     public void insert(Author author) {
-        authorRepository.insert(author);
+        authorRepository.save(author);
     }
 
     @Transactional
     @Override
     public void update(Author author) {
-        authorRepository.update(author);
+        authorRepository.save(author);
     }
 
     @Override
     public Author getById(long id) {
-        return authorRepository.getById(id);
+        return authorRepository.findById(id).orElse(null);
     }
 
     @Override
     public List<Author> getAll() {
-        return authorRepository.getAll();
+        return authorRepository.findAll();
     }
 
     @Transactional

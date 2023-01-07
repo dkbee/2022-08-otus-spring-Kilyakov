@@ -57,7 +57,7 @@ class BookServiceTest {
 
     @Test
     public void getAllBooksTest() {
-        List<Book> result = bookRepository.getAll();
+        List<Book> result = bookRepository.findAll();
         Assertions.assertNotNull(result);
         Assertions.assertTrue(result.size() != 0);
     }

@@ -2,6 +2,7 @@ package ru.otus.spring.kilyakov.service.impl;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.otus.spring.kilyakov.domain.Book;
 import ru.otus.spring.kilyakov.domain.Comment;
 import ru.otus.spring.kilyakov.dto.CommentDto;
 import ru.otus.spring.kilyakov.repository.CommentRepository;
@@ -30,20 +31,21 @@ public class CommentServiceImpl implements CommentService {
     @Transactional
     @Override
     public CommentDto update(Comment comment) {
-        Comment updatedComment = commentRepository.update(comment);
+        Comment updatedComment = commentRepository.save(comment);
         return getCommentDto(updatedComment);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public CommentDto getById(Long id) {
-        Optional<Comment> bookOptional = commentRepository.getById(id);
+        Optional<Comment> bookOptional = commentRepository.findById(id);
         Comment comment = bookOptional.orElse(null);
         return getCommentDto(comment);
     }
 
     @Override
     public List<CommentDto> getAllForBook(Long bookId) {
-        List<Comment> comments = commentRepository.getAllForBook(bookId);
+        List<Comment> comments = commentRepository.findAllByBookId(bookId);
         List<CommentDto> commentDtoList = new ArrayList<>();
         comments.forEach(comment -> commentDtoList.add(CommentDto.builder()
                 .id(comment.getId())
@@ -54,15 +56,14 @@ public class CommentServiceImpl implements CommentService {
 
     @Transactional
     @Override
-    public CommentDto deleteById(Long id) {
-        Comment comment = commentRepository.deleteById(id);
-        return getCommentDto(comment);
+    public void deleteById(Long id) {
+        commentRepository.deleteById(id);
     }
 
     @Transactional
     @Override
-    public int deleteAllForBook(Long bookId) {
-        return commentRepository.deleteAllForBook(bookId);
+    public void deleteByBookId(Long bookId) {
+        commentRepository.deleteAllByBookId(bookId);
     }
 
     private static CommentDto getCommentDto(Comment comment) {

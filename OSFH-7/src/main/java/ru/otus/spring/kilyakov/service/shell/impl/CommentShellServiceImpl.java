@@ -55,14 +55,14 @@ public class CommentShellServiceImpl implements CommentShellService {
 
     @Override
     @ShellMethod(value = "Delete comment", key = {"--delete --comment", "-d --comment"})
-    public CommentDto delete(Long id) {
-        return commentService.deleteById(id);
+    public void delete(Long id) {
+        commentService.deleteById(id);
     }
 
     @Override
     @ShellMethod(value = "Delete comment", key = {"--delete --all --comment", "-d -a --comment"})
-    public int deleteAll(Long bookId) {
-        return commentService.deleteAllForBook(bookId);
+    public void deleteAll(Long bookId) {
+        commentService.deleteByBookId(bookId);
     }
 
     @ShellMethod(value = "Start console", key = {"-sc"})

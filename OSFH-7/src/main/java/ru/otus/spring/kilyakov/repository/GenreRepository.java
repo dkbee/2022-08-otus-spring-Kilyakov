@@ -1,19 +1,9 @@
 package ru.otus.spring.kilyakov.repository;
 
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import ru.otus.spring.kilyakov.domain.Genre;
 
-import java.util.List;
+public interface GenreRepository extends JpaRepository<Genre, Long> {
 
-public interface GenreRepository {
-
-    void insert(Genre genre);
-
-    void update(Genre genre);
-
-    Genre getById(long id);
-
-    List<Genre> getAll();
-
-    void deleteById(long id);
 }
