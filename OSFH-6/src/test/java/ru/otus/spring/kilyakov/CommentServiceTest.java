@@ -11,8 +11,6 @@ import ru.otus.spring.kilyakov.domain.Comment;
 import ru.otus.spring.kilyakov.repository.CommentRepository;
 import ru.otus.spring.kilyakov.repository.impl.CommentRepositoryJpa;
 
-import javax.persistence.TypedQuery;
-import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -50,19 +48,6 @@ class CommentServiceTest {
     }
 
     @Test
-    public void getAllCommentsTest() {
-        List<Comment> actual = commentRepository.getAllForBook(1L);
-        TypedQuery<Comment> query = em.getEntityManager().createQuery("select c from Comment c " +
-                        "where c.book.id = :bookId",
-                Comment.class);
-        query.setParameter("bookId", 1L);
-        List<Comment> expectedComments = query.getResultList();
-        Assertions.assertNotNull(actual);
-        Assertions.assertNotNull(expectedComments);
-        Assertions.assertEquals(actual.size(), expectedComments.size());
-    }
-
-    @Test
     public void updateCommentTest() {
         Comment expected = Comment.builder()
                 .id(1L)
@@ -79,14 +64,6 @@ class CommentServiceTest {
         commentRepository.deleteById(1L);
         Comment expectedComment = em.find(Comment.class, 1L);
         Assertions.assertNull(expectedComment);
-    }
-
-    @Test
-    public void deleteAllCommentsForBookTest() {
-        commentRepository.deleteAllForBook(1L);
-        Book expectedBook = em.find(Book.class, 1L);
-        Assertions.assertNotNull(expectedBook);
-        Assertions.assertTrue(expectedBook.getComments() == null || expectedBook.getComments().size() == 0);
     }
 
 }

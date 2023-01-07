@@ -38,12 +38,6 @@ public class CommentShellServiceImpl implements CommentShellService {
     }
 
     @Override
-    @ShellMethod(value = "Get all comments by book", key = {"--all --comment", "-a --comment"})
-    public List<CommentDto> getAll(Long bookId) {
-        return commentService.getAllForBook(bookId);
-    }
-
-    @Override
     @ShellMethod(value = "Update comment", key = {"--update --comment", "-u --comment"})
     public CommentDto update(Long commentId, String comment, Long bookId) {
         return commentService.update(Comment.builder()
@@ -57,12 +51,6 @@ public class CommentShellServiceImpl implements CommentShellService {
     @ShellMethod(value = "Delete comment", key = {"--delete --comment", "-d --comment"})
     public CommentDto delete(Long id) {
         return commentService.deleteById(id);
-    }
-
-    @Override
-    @ShellMethod(value = "Delete comment", key = {"--delete --all --comment", "-d -a --comment"})
-    public int deleteAll(Long bookId) {
-        return commentService.deleteAllForBook(bookId);
     }
 
     @ShellMethod(value = "Start console", key = {"-sc"})

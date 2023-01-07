@@ -1,15 +1,11 @@
 package ru.otus.spring.kilyakov.repository.impl;
 
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 import ru.otus.spring.kilyakov.domain.Comment;
 import ru.otus.spring.kilyakov.repository.CommentRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
-import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -39,14 +35,6 @@ public class CommentRepositoryJpa implements CommentRepository {
     }
 
     @Override
-    public List<Comment> getAllForBook(Long bookId) {
-        TypedQuery<Comment> query = em.createQuery("select c from Comment c where c.book.id = :bookId",
-                Comment.class);
-        query.setParameter("bookId", bookId);
-        return query.getResultList();
-    }
-
-    @Override
     public Comment deleteById(Long id) {
         Comment comment = em.find(Comment.class, id);
         if (comment != null) {
@@ -55,10 +43,4 @@ public class CommentRepositoryJpa implements CommentRepository {
         return comment;
     }
 
-    @Override
-    public int deleteAllForBook(Long bookId) {
-        Query query = em.createQuery("delete from Comment c where c.book.id = :bookId");
-        query.setParameter("bookId", bookId);
-        return query.executeUpdate();
-    }
 }
