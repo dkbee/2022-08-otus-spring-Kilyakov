@@ -15,7 +15,6 @@ public class GenreRepositoryJpa implements GenreRepository {
     @PersistenceContext
     private final EntityManager em;
 
-
     public GenreRepositoryJpa(EntityManager em) {
         this.em = em;
     }

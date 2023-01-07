@@ -22,26 +22,22 @@ public class CommentRepositoryJpa implements CommentRepository {
         this.em = em;
     }
 
-    @Transactional
     @Override
     public Comment save(Comment comment) {
         em.persist(comment);
         return comment;
     }
 
-    @Transactional
     @Override
     public Comment update(Comment comment) {
         return em.merge(comment);
     }
 
-    @Transactional
     @Override
     public Optional<Comment> getById(Long id) {
         return Optional.ofNullable(em.find(Comment.class, id));
     }
 
-    @Transactional
     @Override
     public List<Comment> getAllForBook(Long bookId) {
         TypedQuery<Comment> query = em.createQuery("select c from Comment c where c.book.id = :bookId",
@@ -50,7 +46,6 @@ public class CommentRepositoryJpa implements CommentRepository {
         return query.getResultList();
     }
 
-    @Transactional
     @Override
     public Comment deleteById(Long id) {
         Comment comment = em.find(Comment.class, id);
@@ -60,7 +55,6 @@ public class CommentRepositoryJpa implements CommentRepository {
         return comment;
     }
 
-    @Transactional
     @Override
     public int deleteAllForBook(Long bookId) {
         Query query = em.createQuery("delete from Comment c where c.book.id = :bookId");
