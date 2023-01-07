@@ -20,12 +20,16 @@ public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column
     private String name;
+
     @ManyToOne(fetch = FetchType.EAGER)
     private Author author;
+
     @ManyToOne(fetch = FetchType.EAGER)
     private Genre genre;
+
     @Fetch(FetchMode.SUBSELECT)
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "book_id")

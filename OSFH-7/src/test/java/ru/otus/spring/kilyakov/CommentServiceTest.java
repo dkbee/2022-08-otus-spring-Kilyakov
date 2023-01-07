@@ -5,11 +5,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.context.annotation.Import;
 import ru.otus.spring.kilyakov.domain.Book;
 import ru.otus.spring.kilyakov.domain.Comment;
 import ru.otus.spring.kilyakov.repository.CommentRepository;
-import ru.otus.spring.kilyakov.repository.impl.CommentRepositoryJpa;
 
 import javax.persistence.TypedQuery;
 import java.util.List;
@@ -18,7 +16,6 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
-@Import({CommentRepositoryJpa.class})
 class CommentServiceTest {
 
     @Autowired
@@ -40,7 +37,7 @@ class CommentServiceTest {
 
     @Test
     public void getCommentTest() {
-        Optional<Comment> actual = commentRepository.getById(1L);
+        Optional<Comment> actual = commentRepository.findById(1L);
         Comment expectedComment = em.find(Comment.class, 1L);
         Assertions.assertNotNull(expectedComment);
         Assertions.assertTrue(actual.isPresent());
@@ -51,7 +48,7 @@ class CommentServiceTest {
 
     @Test
     public void getAllCommentsTest() {
-        List<Comment> actual = commentRepository.getAllForBook(1L);
+        List<Comment> actual = commentRepository.findAllByBookId(1L);
         TypedQuery<Comment> query = em.getEntityManager().createQuery("select c from Comment c " +
                         "where c.book.id = :bookId",
                 Comment.class);
@@ -68,7 +65,7 @@ class CommentServiceTest {
                 .id(1L)
                 .comment("Cool book")
                 .build();
-        commentRepository.update(expected);
+        commentRepository.save(expected);
         Comment expectedComment = em.find(Comment.class, 1L);
         Assertions.assertNotNull(expectedComment);
         Assertions.assertEquals(expected.getComment(), expectedComment.getComment());
@@ -82,8 +79,8 @@ class CommentServiceTest {
     }
 
     @Test
-    public void deleteAllCommentsForBookTest() {
-        commentRepository.deleteAllByBookId(1L);
+    public void deleteAllCommentsByBookIdTest() {
+        commentRepository.deleteByBookId(1L);
         Book expectedBook = em.find(Book.class, 1L);
         Assertions.assertNotNull(expectedBook);
         Assertions.assertTrue(expectedBook.getComments() == null || expectedBook.getComments().size() == 0);

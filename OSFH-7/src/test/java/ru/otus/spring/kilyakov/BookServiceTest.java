@@ -5,14 +5,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.context.annotation.Import;
 import ru.otus.spring.kilyakov.domain.Author;
 import ru.otus.spring.kilyakov.domain.Book;
 import ru.otus.spring.kilyakov.domain.Genre;
 import ru.otus.spring.kilyakov.repository.AuthorRepository;
 import ru.otus.spring.kilyakov.repository.BookRepository;
-import ru.otus.spring.kilyakov.repository.impl.AuthorRepositoryJpa;
-import ru.otus.spring.kilyakov.repository.impl.BookRepositoryJpa;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,7 +17,6 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
-@Import({BookRepositoryJpa.class, AuthorRepositoryJpa.class})
 class BookServiceTest {
 
     @Autowired
@@ -46,7 +42,7 @@ class BookServiceTest {
 
     @Test
     public void getBookTest() {
-        Optional<Book> actual = bookRepository.getById(1L);
+        Optional<Book> actual = bookRepository.findById(1L);
         Book expectedBook = em.find(Book.class, 1L);
         Assertions.assertTrue(actual.isPresent());
         Assertions.assertNotNull(expectedBook);
@@ -64,14 +60,14 @@ class BookServiceTest {
 
     @Test
     public void updateBookTest() {
-        authorRepository.insert(Author.builder().firstName("Anita").lastName("Appleby").build());
+        Author author = authorRepository.save(Author.builder().firstName("Anita").lastName("Appleby").build());
         Book expected = Book.builder()
                 .id(1L)
                 .name("Of Course You're Still Single, Take a Look at Yourself You Dumb Slut.")
-                .author(Author.builder().id(3L).firstName("Anita").lastName("Appleby").build())
+                .author(author)
                 .genre(Genre.builder().id(2L).build())
                 .build();
-        bookRepository.update(expected);
+        bookRepository.save(expected);
         Book expectedBook = em.find(Book.class, 1L);
         Assertions.assertNotNull(expectedBook);
         Assertions.assertEquals(expected.getName(), expectedBook.getName());
