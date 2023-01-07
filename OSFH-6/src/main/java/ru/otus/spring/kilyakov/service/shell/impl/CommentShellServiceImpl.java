@@ -40,7 +40,7 @@ public class CommentShellServiceImpl implements CommentShellService {
     @Override
     @ShellMethod(value = "Get all comments by book", key = {"--all --comment", "-a --comment"})
     public List<CommentDto> getAll(Long bookId) {
-        return commentService.getAll(bookId);
+        return commentService.getAllForBook(bookId);
     }
 
     @Override
@@ -62,7 +62,7 @@ public class CommentShellServiceImpl implements CommentShellService {
     @Override
     @ShellMethod(value = "Delete comment", key = {"--delete --all --comment", "-d -a --comment"})
     public int deleteAll(Long bookId) {
-        return commentService.deleteAll(bookId);
+        return commentService.deleteAllForBook(bookId);
     }
 
     @ShellMethod(value = "Start console", key = {"-sc"})

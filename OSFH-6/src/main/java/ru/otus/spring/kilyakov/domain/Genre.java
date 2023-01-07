@@ -18,7 +18,7 @@ public class Genre {
     @Id
     private Long id;
 
-    @Column(name = "name")
+    @Column
     private String name;
 
     @OneToMany(fetch = FetchType.LAZY)

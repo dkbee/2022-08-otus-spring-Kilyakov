@@ -43,7 +43,7 @@ public class CommentRepositoryJpa implements CommentRepository {
 
     @Transactional
     @Override
-    public List<Comment> getAll(Long bookId) {
+    public List<Comment> getAllForBook(Long bookId) {
         TypedQuery<Comment> query = em.createQuery("select c from Comment c where c.book.id = :bookId",
                 Comment.class);
         query.setParameter("bookId", bookId);
@@ -61,7 +61,7 @@ public class CommentRepositoryJpa implements CommentRepository {
     }
     @Transactional
     @Override
-    public int deleteAll(Long bookId) {
+    public int deleteAllForBook(Long bookId) {
         Query query = em.createQuery("delete from Comment c where c.book.id = :bookId");
         query.setParameter("bookId", bookId);
         return query.executeUpdate();

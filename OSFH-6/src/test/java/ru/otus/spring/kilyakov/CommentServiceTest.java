@@ -51,7 +51,7 @@ class CommentServiceTest {
 
     @Test
     public void getAllCommentsTest() {
-        List<Comment> actual = commentRepository.getAll(1L);
+        List<Comment> actual = commentRepository.getAllForBook(1L);
         TypedQuery<Comment> query = em.getEntityManager().createQuery("select c from Comment c " +
                         "where c.book.id = :bookId",
                 Comment.class);
@@ -82,8 +82,8 @@ class CommentServiceTest {
     }
 
     @Test
-    public void deleteAllCommentsTest() {
-        commentRepository.deleteAll(1L);
+    public void deleteAllCommentsForBookTest() {
+        commentRepository.deleteAllForBook(1L);
         Book expectedBook = em.find(Book.class, 1L);
         Assertions.assertNotNull(expectedBook);
         Assertions.assertTrue(expectedBook.getComments() == null || expectedBook.getComments().size() == 0);

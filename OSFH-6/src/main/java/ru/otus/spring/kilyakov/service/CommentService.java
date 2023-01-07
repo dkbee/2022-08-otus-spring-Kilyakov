@@ -12,9 +12,9 @@ public interface CommentService {
 
     CommentDto getById(Long id);
 
-    List<CommentDto> getAll(Long bookId);
+    List<CommentDto> getAllForBook(Long bookId);
 
     CommentDto deleteById(Long id);
 
-    int deleteAll(Long bookId);
+    int deleteAllForBook(Long bookId);
 }

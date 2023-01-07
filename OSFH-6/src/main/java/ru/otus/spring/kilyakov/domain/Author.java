@@ -18,11 +18,11 @@ public class Author {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "firstName")
+    @Column
     private String firstName;
-    @Column(name = "middleName")
+    @Column
     private String middleName;
-    @Column(name = "lastName")
+    @Column
     private String lastName;
 
     @OneToMany(fetch = FetchType.LAZY)

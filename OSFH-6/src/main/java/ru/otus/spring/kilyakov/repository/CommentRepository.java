@@ -14,9 +14,9 @@ public interface CommentRepository {
 
     Optional<Comment> getById(Long id);
 
-    List<Comment> getAll(Long bookId);
+    List<Comment> getAllForBook(Long bookId);
 
     Comment deleteById(Long id);
 
-    int deleteAll(Long bookId);
+    int deleteAllForBook(Long bookId);
 }
