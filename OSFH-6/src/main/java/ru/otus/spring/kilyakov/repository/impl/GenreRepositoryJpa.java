@@ -1,6 +1,6 @@
 package ru.otus.spring.kilyakov.repository.impl;
 
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 import ru.otus.spring.kilyakov.domain.Genre;
 import ru.otus.spring.kilyakov.repository.GenreRepository;
 
@@ -9,7 +9,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
-@Repository
+@Component
 public class GenreRepositoryJpa implements GenreRepository {
 
     @PersistenceContext

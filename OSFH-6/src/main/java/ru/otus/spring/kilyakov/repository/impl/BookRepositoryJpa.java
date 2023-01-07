@@ -1,8 +1,8 @@
 package ru.otus.spring.kilyakov.repository.impl;
 
-import org.springframework.stereotype.Repository;
-import ru.otus.spring.kilyakov.repository.BookRepository;
+import org.springframework.stereotype.Component;
 import ru.otus.spring.kilyakov.domain.Book;
+import ru.otus.spring.kilyakov.repository.BookRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -10,7 +10,7 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 import java.util.Optional;
 
-@Repository
+@Component
 public class BookRepositoryJpa implements BookRepository {
 
     @PersistenceContext

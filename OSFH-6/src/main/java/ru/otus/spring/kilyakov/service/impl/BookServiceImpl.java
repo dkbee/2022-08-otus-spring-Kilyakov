@@ -35,7 +35,7 @@ public class BookServiceImpl implements BookService {
         Book updatedBook = bookRepository.update(book);
         return getBookDto(updatedBook);
     }
-
+    @Transactional(readOnly = true)
     @Override
     public BookDto getById(Long id) {
         Optional<Book> bookOptional = bookRepository.getById(id);

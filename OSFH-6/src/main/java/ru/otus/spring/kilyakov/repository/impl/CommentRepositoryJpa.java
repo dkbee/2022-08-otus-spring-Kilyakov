@@ -1,6 +1,6 @@
 package ru.otus.spring.kilyakov.repository.impl;
 
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import ru.otus.spring.kilyakov.domain.Comment;
 import ru.otus.spring.kilyakov.repository.CommentRepository;
@@ -12,7 +12,7 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 import java.util.Optional;
 
-@Repository
+@Component
 public class CommentRepositoryJpa implements CommentRepository {
 
     @PersistenceContext
@@ -59,6 +59,7 @@ public class CommentRepositoryJpa implements CommentRepository {
         }
         return comment;
     }
+
     @Transactional
     @Override
     public int deleteAllForBook(Long bookId) {
