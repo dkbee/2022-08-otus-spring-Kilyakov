@@ -7,8 +7,6 @@ import ru.otus.spring.kilyakov.dto.CommentDto;
 import ru.otus.spring.kilyakov.repository.CommentRepository;
 import ru.otus.spring.kilyakov.service.CommentService;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -42,27 +40,10 @@ public class CommentServiceImpl implements CommentService {
         return getCommentDto(comment);
     }
 
-    @Override
-    public List<CommentDto> getAllForBook(Long bookId) {
-        List<Comment> comments = commentRepository.findAllByBookId(bookId);
-        List<CommentDto> commentDtoList = new ArrayList<>();
-        comments.forEach(comment -> commentDtoList.add(CommentDto.builder()
-                .id(comment.getId())
-                .comment(comment.getComment())
-                .build()));
-        return commentDtoList;
-    }
-
     @Transactional
     @Override
     public void deleteById(Long id) {
         commentRepository.deleteById(id);
-    }
-
-    @Transactional
-    @Override
-    public void deleteByBookId(Long bookId) {
-        commentRepository.deleteByBookId(bookId);
     }
 
     private static CommentDto getCommentDto(Comment comment) {

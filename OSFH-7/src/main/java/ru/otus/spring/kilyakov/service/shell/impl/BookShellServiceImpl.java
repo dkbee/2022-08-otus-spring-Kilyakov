@@ -7,7 +7,6 @@ import ru.otus.spring.kilyakov.domain.Author;
 import ru.otus.spring.kilyakov.domain.Book;
 import ru.otus.spring.kilyakov.domain.Genre;
 import ru.otus.spring.kilyakov.dto.BookDto;
-import ru.otus.spring.kilyakov.repository.BookRepository;
 import ru.otus.spring.kilyakov.service.BookService;
 import ru.otus.spring.kilyakov.service.shell.BookShellService;
 

@@ -10,10 +10,4 @@ import ru.otus.spring.kilyakov.domain.Comment;
 import java.util.List;
 
 public interface CommentRepository extends JpaRepository<Comment, Long> {
-
-    List<Comment> findAllByBookId(Long bookId);
-
-    @Modifying
-    @Query("delete from Comment c where c.book.id = :bookId")
-    void deleteByBookId(@Param(value = "bookId") Long bookId);
 }

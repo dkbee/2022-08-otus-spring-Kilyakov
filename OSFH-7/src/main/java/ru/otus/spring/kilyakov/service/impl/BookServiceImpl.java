@@ -2,10 +2,9 @@ package ru.otus.spring.kilyakov.service.impl;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.otus.spring.kilyakov.domain.Comment;
-import ru.otus.spring.kilyakov.repository.BookRepository;
 import ru.otus.spring.kilyakov.domain.Book;
 import ru.otus.spring.kilyakov.dto.BookDto;
+import ru.otus.spring.kilyakov.repository.BookRepository;
 import ru.otus.spring.kilyakov.service.BookService;
 import ru.otus.spring.kilyakov.service.CommentService;
 
@@ -36,6 +35,7 @@ public class BookServiceImpl implements BookService {
         Book updatedBook = bookRepository.save(book);
         return getBookDto(updatedBook);
     }
+
     @Transactional(readOnly = true)
     @Override
     public BookDto getById(Long id) {
