@@ -1,6 +1,6 @@
 package ru.otus.spring.kilyakov.service.impl;
 
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.otus.spring.kilyakov.domain.Genre;
 import ru.otus.spring.kilyakov.repository.GenreRepository;
@@ -8,7 +8,7 @@ import ru.otus.spring.kilyakov.service.GenreService;
 
 import java.util.List;
 
-@Repository
+@Service
 public class GenreServiceImpl implements GenreService {
 
     private final GenreRepository genreRepository;
