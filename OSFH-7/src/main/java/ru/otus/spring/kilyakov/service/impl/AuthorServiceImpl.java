@@ -1,7 +1,6 @@
 package ru.otus.spring.kilyakov.service.impl;
 
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 import ru.otus.spring.kilyakov.domain.Author;
 import ru.otus.spring.kilyakov.repository.AuthorRepository;
 import ru.otus.spring.kilyakov.service.AuthorService;
@@ -17,13 +16,11 @@ public class AuthorServiceImpl implements AuthorService {
         this.authorRepository = authorRepository;
     }
 
-    @Transactional
     @Override
     public void insert(Author author) {
         authorRepository.save(author);
     }
 
-    @Transactional
     @Override
     public void update(Author author) {
         authorRepository.save(author);
@@ -39,7 +36,6 @@ public class AuthorServiceImpl implements AuthorService {
         return authorRepository.findAll();
     }
 
-    @Transactional
     @Override
     public void deleteById(long id) {
         authorRepository.deleteById(id);

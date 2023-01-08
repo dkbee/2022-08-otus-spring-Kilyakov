@@ -22,7 +22,6 @@ public class BookServiceImpl implements BookService {
         this.commentService = commentService;
     }
 
-    @Transactional
     @Override
     public BookDto save(Book book) {
         Book savedBook = bookRepository.save(book);
@@ -44,7 +43,6 @@ public class BookServiceImpl implements BookService {
         return getBookDto(book);
     }
 
-    @Override
     public List<BookDto> getAll() {
         List<Book> books = bookRepository.findAll();
         List<BookDto> bookDtoList = new ArrayList<>();
@@ -57,7 +55,6 @@ public class BookServiceImpl implements BookService {
         return bookDtoList;
     }
 
-    @Transactional
     @Override
     public void deleteById(Long id) {
         bookRepository.deleteById(id);

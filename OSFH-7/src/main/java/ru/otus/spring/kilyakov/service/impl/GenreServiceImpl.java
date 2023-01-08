@@ -17,18 +17,17 @@ public class GenreServiceImpl implements GenreService {
         this.genreRepository = genreRepository;
     }
 
-    @Transactional
     @Override
     public void insert(Genre genre) {
         genreRepository.save(genre);
     }
 
-    @Transactional
     @Override
     public void update(Genre genre) {
         genreRepository.save(genre);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public Genre getById(long id) {
         return genreRepository.findById(id).orElse(null);
@@ -39,7 +38,6 @@ public class GenreServiceImpl implements GenreService {
         return genreRepository.findAll();
     }
 
-    @Transactional
     @Override
     public void deleteById(long id) {
         genreRepository.deleteById(id);

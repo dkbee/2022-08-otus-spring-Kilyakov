@@ -18,7 +18,6 @@ public class CommentServiceImpl implements CommentService {
         this.commentRepository = commentRepository;
     }
 
-    @Transactional
     @Override
     public CommentDto save(Comment comment) {
         Comment savedComment = commentRepository.save(comment);
@@ -40,7 +39,6 @@ public class CommentServiceImpl implements CommentService {
         return getCommentDto(comment);
     }
 
-    @Transactional
     @Override
     public void deleteById(Long id) {
         commentRepository.deleteById(id);
