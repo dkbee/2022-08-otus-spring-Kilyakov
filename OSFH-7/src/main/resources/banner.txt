@@ -1,0 +1,25 @@
+${AnsiColor.223}                                      Y.                     _
+                                       YiL                  .```.
+                                       Yii;                ; .;; .
+${AnsiColor.RED}                  WOW${AnsiColor.223}                  YY;ii._            : .;;;; :
+                                       iiYYYYYYYiiiii;;;;i  ;;::;;;;
+                                   _.;YYYYYYYiiiiiiYYYii  .;;.   ;;;${AnsiColor.GREEN}     very abstract${AnsiColor.223}
+                                .YYYYYYYYYYiiYYYYYYYYYYYYYii;   ;;;;
+                              .YYYYYYYYYYiiYYYYYYYYYYYYYYYYY;.ii;`..
+                             :YYYYYY$$YYiiYY$$$$iiiYYYYYYYiiYYYYiYYii.
+                            :YYY$!. TYiiYY$$$$$YYYYYYYYYYYiiiYYYYiYY.
+                            Y$MM$:   :YYYYYY$!"``"4YYYYYYiiiYYYYiiYY.
+                         .  :MM$$b.,dYY$$Yii" :"   :YYYYllYiiYYYiYY
+                        _ :`4MM$!YYYYYYYYYii,.__.diii$$YYYYYYYYYYYY
+                        _ $b`P`     "$$$$$$iiiiiiii$$$$YY$$$$$$YiY;   ${AnsiColor.BLUE}  such injection${AnsiColor.223}
+                         ,.`$:       :$$$$$$$$$YYYYY$$$$$$$$$YYiiYYL
+                         "`;$$.    .;PPb$`.,.``T$$YY$$$$YYYYYYiiiYYU
+                         ;$P$;;; ;;;;i$y$"!Y$$$b;$$$Y$YY$$YYYiiiYYiY
+                         $Fi$$ ..  ``iii.`-";YYYYY$$YY$$$$$YYYiYiYYY
+                         :Y$$rb ````  `_..;;i;YYY$YY$$$$$$$YYYYYYiYY:
+                          :$$$$$i;;iiiiidYYYYYYYYYY$$$$$$YYYYYYiiYYYY.
+                           `$$$$$$$YYYYYYYYYYYYY$$$$$$YYYYYYiiiYYYYYYY
+                           .i!$$$$$$YYYYYYYY$$$$$$YYY$$YYiiiiiiYYYYYYY
+
+                             ${AnsiColor.161}      very build successful${AnsiColor.DEFAULT}
+                                 ${AnsiColor.14}                            so fast developing${AnsiColor.DEFAULT}
