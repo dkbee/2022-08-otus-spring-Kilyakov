@@ -24,14 +24,14 @@ public class Book {
     @Column
     private String name;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Author author;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Genre genre;
 
     @Fetch(FetchMode.SUBSELECT)
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "book_id")
     private List<Comment> comments;
 }

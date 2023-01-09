@@ -22,6 +22,7 @@ public class BookServiceImpl implements BookService {
         this.commentService = commentService;
     }
 
+    @Transactional
     @Override
     public BookDto save(Book book) {
         Book savedBook = bookRepository.save(book);
@@ -31,6 +32,8 @@ public class BookServiceImpl implements BookService {
     @Transactional
     @Override
     public BookDto update(Book book) {
+        Optional<Book> bookOptional = bookRepository.findById(book.getId());
+        bookOptional.ifPresent(value -> book.setComments(value.getComments()));
         Book updatedBook = bookRepository.save(book);
         return getBookDto(updatedBook);
     }
@@ -43,14 +46,15 @@ public class BookServiceImpl implements BookService {
         return getBookDto(book);
     }
 
+    @Transactional(readOnly = true)
     public List<BookDto> getAll() {
         List<Book> books = bookRepository.findAll();
         List<BookDto> bookDtoList = new ArrayList<>();
         books.forEach(book -> bookDtoList.add(BookDto.builder()
                 .id(book.getId())
                 .name(book.getName())
-                .genre(book.getGenre())
-                .author(book.getAuthor())
+                .author(book.getAuthor() != null && book.getAuthor().getFirstName() != null ? book.getAuthor() : null)
+                .genre(book.getGenre() != null && book.getGenre().getName() != null ? book.getGenre() : null)
                 .build()));
         return bookDtoList;
     }
@@ -66,8 +70,8 @@ public class BookServiceImpl implements BookService {
             bookDto = BookDto.builder()
                     .id(book.getId())
                     .name(book.getName())
-                    .author(book.getAuthor())
-                    .genre(book.getGenre())
+                    .author(book.getAuthor() != null && book.getAuthor().getFirstName() != null ? book.getAuthor() : null)
+                    .genre(book.getGenre() != null && book.getGenre().getName() != null ? book.getGenre() : null)
                     .comments(book.getComments() != null && book.getComments().size() > 0 ? book.getComments() : null)
                     .build();
         }

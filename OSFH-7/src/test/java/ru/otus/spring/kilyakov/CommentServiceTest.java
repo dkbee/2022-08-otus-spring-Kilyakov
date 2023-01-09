@@ -7,8 +7,12 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import ru.otus.spring.kilyakov.domain.Book;
 import ru.otus.spring.kilyakov.domain.Comment;
+import ru.otus.spring.kilyakov.repository.BookRepository;
 import ru.otus.spring.kilyakov.repository.CommentRepository;
 
+import javax.persistence.TypedQuery;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -18,6 +22,8 @@ class CommentServiceTest {
 
     @Autowired
     CommentRepository commentRepository;
+    @Autowired
+    BookRepository bookRepository;
 
     @Autowired
     private TestEntityManager em;
@@ -45,6 +51,23 @@ class CommentServiceTest {
     }
 
     @Test
+    public void getAllCommentsTest() {
+        Optional<Book> book = bookRepository.findById(1L);
+        List<Comment> actual = new ArrayList<>();
+        if (book.isPresent()) {
+            actual = book.get().getComments();
+        }
+        TypedQuery<Comment> query = em.getEntityManager().createQuery("select c from Comment c " +
+                        "where c.book.id = :bookId",
+                Comment.class);
+        query.setParameter("bookId", 1L);
+        List<Comment> expectedComments = query.getResultList();
+        Assertions.assertNotNull(actual);
+        Assertions.assertNotNull(expectedComments);
+        Assertions.assertEquals(actual.size(), expectedComments.size());
+    }
+
+    @Test
     public void updateCommentTest() {
         Comment expected = Comment.builder()
                 .id(1L)
@@ -61,6 +84,15 @@ class CommentServiceTest {
         commentRepository.deleteById(1L);
         Comment expectedComment = em.find(Comment.class, 1L);
         Assertions.assertNull(expectedComment);
+    }
+
+    @Test
+    public void deleteAllCommentsForBookTest() {
+        Optional<Book> book = bookRepository.findById(1L);
+        book.ifPresent(value -> value.getComments().clear());
+        Book expectedBook = em.find(Book.class, 1L);
+        Assertions.assertNotNull(expectedBook);
+        Assertions.assertTrue(expectedBook.getComments() == null || expectedBook.getComments().size() == 0);
     }
 
 }

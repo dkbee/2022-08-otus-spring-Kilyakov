@@ -10,6 +10,7 @@ import ru.otus.spring.kilyakov.service.CommentService;
 import ru.otus.spring.kilyakov.service.shell.CommentShellService;
 
 import java.sql.SQLException;
+import java.util.List;
 
 @ShellComponent
 public class CommentShellServiceImpl implements CommentShellService {
@@ -37,6 +38,12 @@ public class CommentShellServiceImpl implements CommentShellService {
     }
 
     @Override
+    @ShellMethod(value = "Get all comments by book", key = {"--all --comment", "-a --comment"})
+    public List<CommentDto> findByBookId(Long bookId) {
+        return commentService.findByBookId(bookId);
+    }
+
+    @Override
     @ShellMethod(value = "Update comment", key = {"--update --comment", "-u --comment"})
     public CommentDto update(Long commentId, String comment, Long bookId) {
         return commentService.update(Comment.builder()
@@ -50,6 +57,12 @@ public class CommentShellServiceImpl implements CommentShellService {
     @ShellMethod(value = "Delete comment", key = {"--delete --comment", "-d --comment"})
     public void delete(Long id) {
         commentService.deleteById(id);
+    }
+
+    @Override
+    @ShellMethod(value = "Delete comment", key = {"--delete --all --comment", "-d -a --comment"})
+    public void deleteByBookId(Long bookId) {
+        commentService.deleteByBookId(bookId);
     }
 
     @ShellMethod(value = "Start console", key = {"-sc"})
