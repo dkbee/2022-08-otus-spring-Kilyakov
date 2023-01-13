@@ -39,7 +39,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Transactional(readOnly = true)
     @Override
-    public CommentDto getById(Long id) {
+    public CommentDto getById(String id) {
         Optional<Comment> bookOptional = commentRepository.findById(id);
         Comment comment = bookOptional.orElse(null);
         return getCommentDto(comment);
@@ -47,7 +47,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Transactional(readOnly = true)
     @Override
-    public List<CommentDto> findByBookId(Long bookId) {
+    public List<CommentDto> findByBookId(String bookId) {
         Optional<Book> book = bookRepository.findById(bookId);
         List<Comment> commentList = new ArrayList<>();
         if (book.isPresent()) {
@@ -62,13 +62,13 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public void deleteById(Long id) {
+    public void deleteById(String id) {
         commentRepository.deleteById(id);
     }
 
     @Transactional
     @Override
-    public void deleteByBookId(Long bookId) {
+    public void deleteByBookId(String bookId) {
         Optional<Book> book = bookRepository.findById(bookId);
         book.ifPresent(value -> {
             if (value.getComments() != null && value.getComments().size() > 0) {

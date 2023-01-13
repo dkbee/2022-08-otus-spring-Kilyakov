@@ -6,15 +6,15 @@ import java.util.List;
 
 public interface CommentShellService {
 
-    public CommentDto insert(String comment, Long bookId);
+    public CommentDto insert(String comment, String bookId);
 
-    public CommentDto getById(Long id);
+    public CommentDto getById(String id);
 
-    public List<CommentDto> findByBookId(Long bookId);
+    public List<CommentDto> findByBookId(String bookId);
 
-    public CommentDto update(Long commentId, String comment, Long bookId);
+    public CommentDto update(String commentId, String comment, String bookId);
 
-    public void delete(Long id);
+    public void delete(String id);
 
-    public void deleteByBookId(Long bookId);
+    public void deleteByBookId(String bookId);
 }

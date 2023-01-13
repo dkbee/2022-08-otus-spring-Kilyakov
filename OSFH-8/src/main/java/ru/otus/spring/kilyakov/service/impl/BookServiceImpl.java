@@ -40,7 +40,7 @@ public class BookServiceImpl implements BookService {
 
     @Transactional(readOnly = true)
     @Override
-    public BookDto getById(Long id) {
+    public BookDto getById(String id) {
         Optional<Book> bookOptional = bookRepository.findById(id);
         Book book = bookOptional.orElse(null);
         return getBookDto(book);
@@ -60,7 +60,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void deleteById(Long id) {
+    public void deleteById(String id) {
         bookRepository.deleteById(id);
     }
 

@@ -10,11 +10,11 @@ public interface CommentService {
 
     CommentDto update(Comment comment);
 
-    CommentDto getById(Long id);
+    CommentDto getById(String id);
 
-    List<CommentDto> findByBookId(Long bookId);
+    List<CommentDto> findByBookId(String bookId);
 
-    void deleteById(Long id);
+    void deleteById(String id);
 
-    void deleteByBookId(Long bookId);
+    void deleteByBookId(String bookId);
 }

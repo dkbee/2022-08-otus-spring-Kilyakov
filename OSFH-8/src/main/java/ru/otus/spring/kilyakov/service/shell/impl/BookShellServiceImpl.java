@@ -1,6 +1,5 @@
 package ru.otus.spring.kilyakov.service.shell.impl;
 
-import org.h2.tools.Console;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
 import ru.otus.spring.kilyakov.domain.Author;
@@ -10,7 +9,6 @@ import ru.otus.spring.kilyakov.dto.BookDto;
 import ru.otus.spring.kilyakov.service.BookService;
 import ru.otus.spring.kilyakov.service.shell.BookShellService;
 
-import java.sql.SQLException;
 import java.util.List;
 
 @ShellComponent
@@ -23,7 +21,7 @@ public class BookShellServiceImpl implements BookShellService {
 
     @Override
     @ShellMethod(value = "Insert book", key = {"--insert --book", "-i --book"})
-    public BookDto insert(String name, Long authorId, Long genreId) {
+    public BookDto insert(String name, String authorId, String genreId) {
         return bookService.save(Book.builder()
                 .name(name)
                 .author(Author.builder().id(authorId).build())
@@ -33,7 +31,7 @@ public class BookShellServiceImpl implements BookShellService {
 
     @Override
     @ShellMethod(value = "Get book by id", key = {"--get --book", "-g --book"})
-    public BookDto getById(Long id) {
+    public BookDto getById(String id) {
         return bookService.getById(id);
     }
 
@@ -45,7 +43,7 @@ public class BookShellServiceImpl implements BookShellService {
 
     @Override
     @ShellMethod(value = "Update book", key = {"--update --book", "-u --book"})
-    public BookDto update(Long bookId, String name, Long authorId, Long genreId) {
+    public BookDto update(String bookId, String name, String authorId, String genreId) {
         return bookService.update(Book.builder()
                 .id(bookId)
                 .name(name)
@@ -56,12 +54,7 @@ public class BookShellServiceImpl implements BookShellService {
 
     @Override
     @ShellMethod(value = "Delete book", key = {"--delete --book", "-d --book"})
-    public void delete(Long id) {
+    public void delete(String id) {
         bookService.deleteById(id);
-    }
-
-    @ShellMethod(value = "Start console", key = {"-sc"})
-    public void startConsole() throws SQLException {
-        Console.main();
     }
 }

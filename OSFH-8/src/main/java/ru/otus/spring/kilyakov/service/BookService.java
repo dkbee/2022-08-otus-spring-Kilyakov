@@ -10,9 +10,9 @@ public interface BookService {
 
     BookDto update(Book book);
 
-    BookDto getById(Long id);
+    BookDto getById(String id);
 
     List<BookDto> getAll();
 
-    void deleteById(Long id);
+    void deleteById(String id);
 }

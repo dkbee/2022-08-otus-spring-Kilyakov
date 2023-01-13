@@ -6,13 +6,13 @@ import java.util.List;
 
 public interface BookShellService {
 
-    public BookDto insert(String name, Long authorId, Long bookId);
+    public BookDto insert(String name, String authorId, String bookId);
 
-    public BookDto getById(Long id);
+    public BookDto getById(String id);
 
     public List<BookDto> getAll();
 
-    public BookDto update(Long bookId, String name, Long authorId, Long genreId);
+    public BookDto update(String bookId, String name, String authorId, String genreId);
 
-    public void delete(Long id);
+    public void delete(String id);
 }

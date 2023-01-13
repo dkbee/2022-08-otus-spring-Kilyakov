@@ -11,10 +11,10 @@ public interface GenreService {
 
     void update(Genre genre);
 
-    Genre getById(long id);
+    Genre getById(String id);
 
     List<Genre> getAll();
 
-    void deleteById(long id);
+    void deleteById(String id);
 
 }

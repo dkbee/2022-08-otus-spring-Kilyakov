@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CommentDto {
 
-    private Long id;
+    private String id;
     private String comment;
 
     private String bookName;

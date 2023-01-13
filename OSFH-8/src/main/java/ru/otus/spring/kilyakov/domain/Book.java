@@ -4,34 +4,31 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
-import javax.persistence.*;
 import java.util.List;
 
-@Entity
-@Table(name = "books")
+@Document(collection = "books")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class Book {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
 
-    @Column
+    @Field
     private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @DBRef
     private Author author;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @DBRef
     private Genre genre;
 
-    @Fetch(FetchMode.SUBSELECT)
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "book_id")
+    @DBRef
     private List<Comment> comments;
 }
