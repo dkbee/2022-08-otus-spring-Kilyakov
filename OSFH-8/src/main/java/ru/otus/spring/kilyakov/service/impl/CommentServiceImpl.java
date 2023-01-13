@@ -27,6 +27,16 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public CommentDto save(Comment comment) {
         Comment savedComment = commentRepository.save(comment);
+        Optional<Book> bookOptional = bookRepository.findById(comment.getBook().getId());
+        bookOptional.ifPresent(book -> {
+            List<Comment> comments = book.getComments();
+            if (comments == null) {
+                comments = new ArrayList<>();
+                book.setComments(comments);
+            }
+            comments.add(comment);
+            bookRepository.save(book);
+        });
         return getCommentDto(savedComment);
     }
 

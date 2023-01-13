@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 public class CommentDto {
 
     private String id;
+
     private String comment;
 
     private String bookName;
