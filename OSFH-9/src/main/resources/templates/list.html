@@ -52,6 +52,10 @@
 
 <h3 th:text="Books">Books:</h3>
 
+<div class="row">
+    <a th:href="@{/add}"><button type="button">Add book</button></a>
+</div>
+
 <table class="books">
     <thead>
     <tr>
@@ -63,7 +67,7 @@
     <tbody>
     <tr th:each="book : ${books}">
         <td th:text="${book.id}">1</td>
-        <td th:text="${book.name}">John Doe</td>
+        <td><a th:href="@{/get(id=${book.id})}" href="read.html" th:text="${book.name}"></a></td>
         <td>
             <a th:href="@{/edit(id=${book.id})}" href="edit.html" th:text="Edit">Edit</a>
         </td>

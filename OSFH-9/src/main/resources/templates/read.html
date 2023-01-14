@@ -32,6 +32,20 @@
             color: red;
         }
 
+        .comments {
+            border: 1px solid steelblue;
+            width: 300px;
+            border-collapse: collapse;
+        }
+
+        .comments tr td, th {
+            padding: 5px;
+            border: 1px solid steelblue;
+        }
+
+        .comments td:last-child, td:first-child {
+            width: 50px;
+        }
 
     </style>
 
@@ -43,41 +57,43 @@
             padding-left: 30px;
         }
 
-
     </style>
 </head>
 <body>
 
 <!-- Book edition -->
-<form id="edit-form" action="edit.html" th:action="${book?.id} ? @{/edit(id=${book.id})} : @{/add}" th:method="post"
-      th:object="${book}">
+<form id="read-form" th:object="${book}">
     <h3>Book Info:</h3>
 
     <div class="row">
-        <label for="id-input">ID:</label>
-        <input id="id-input" type="text" readonly="readonly" th:value="*{id} ?: ''" value="1"/>
+        <label for="book-name-read">Name:</label>
+        <label id="book-name-read" th:text="*{name} ?: ''"></label>
+    </div>
+    <div class="row">
+        <label for="author-name-read">Author:</label>
+        <label id="author-name-read" th:text="*{author.lastName} ? *{author.firstName} + ' ' +
+          *{author.lastName} : *{author.firstName}"></label>
+    </div>
+    <div class="row">
+        <label for="genre-name-read">Author:</label>
+        <label id="genre-name-read" th:text="*{genre.name}"></label>
     </div>
 
-    <div class="row">
-        <label for="book-name-input">Name:</label>
-        <input id="book-name-input" name="name" type="text" th:value="*{name} ?: ''" value="Test"/>
-    </div>
-    <div class="row">
-        <label for="author-select-option">Author:</label>
-        <select id="author-select-option" th:field="*{author}">
-            <option th:each="author : ${authors}" th:value="${author.id}"
-                    th:text="${author.lastName} ? ${author.firstName} + ' ' +  ${author.lastName} : ${author.firstName}"></option>
-        </select>
-    </div>
-    <div class="row">
-        <label for="genre-select-option">Genre:</label>
-        <select id="genre-select-option" th:field="*{genre}">
-            <option th:each="genre : ${genres}" th:value="${genre.id}" th:text="${genre.name}"></option>
-        </select>
-    </div>
+    <label for="comments-name-read">Comments:</label>
+    <table class="comments" id="comments-name-read">
+        <thead>
+        <tr>
+            <th>Comment</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="comment : *{comments}">
+            <td th:text="${comment.comment}"></td>
+        </tr>
+        </tbody>
+    </table>
 
     <div class="row">
-        <button type="submit" th:text="Save">Save</button>
         <a href="list.html" th:href="@{/}">
             <button type="button" th:text="Cancel">Cancel</button>
         </a>
