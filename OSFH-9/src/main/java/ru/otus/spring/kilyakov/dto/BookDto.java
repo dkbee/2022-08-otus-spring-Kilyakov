@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.otus.spring.kilyakov.domain.Author;
+import ru.otus.spring.kilyakov.domain.Book;
 import ru.otus.spring.kilyakov.domain.Comment;
 import ru.otus.spring.kilyakov.domain.Genre;
 
@@ -21,6 +22,10 @@ public class BookDto {
     private Author author;
     private Genre genre;
     private List<Comment> comments;
+
+    public Book toDomainObject(){
+        return new Book(id, name, author, genre, comments);
+    }
 
     @Override
     public String toString() {
