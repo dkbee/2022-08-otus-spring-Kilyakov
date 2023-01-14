@@ -20,7 +20,6 @@ public class Book {
     @Id
     private String id;
 
-    @Field
     private String name;
 
     @DBRef

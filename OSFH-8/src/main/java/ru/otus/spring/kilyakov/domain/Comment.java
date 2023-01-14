@@ -19,7 +19,6 @@ public class Comment {
     @Id
     private String id;
 
-    @Field
     private String comment;
 
     @DBRef

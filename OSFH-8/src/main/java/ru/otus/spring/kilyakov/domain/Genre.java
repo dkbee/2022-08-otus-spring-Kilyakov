@@ -20,7 +20,6 @@ public class Genre {
     @Id
     private String id;
 
-    @Field
     private String name;
 
     @DBRef

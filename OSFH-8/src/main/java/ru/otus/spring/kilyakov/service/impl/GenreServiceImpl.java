@@ -1,7 +1,6 @@
 package ru.otus.spring.kilyakov.service.impl;
 
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 import ru.otus.spring.kilyakov.domain.Genre;
 import ru.otus.spring.kilyakov.repository.GenreRepository;
 import ru.otus.spring.kilyakov.service.GenreService;
@@ -27,7 +26,6 @@ public class GenreServiceImpl implements GenreService {
         genreRepository.save(genre);
     }
 
-    @Transactional(readOnly = true)
     @Override
     public Genre getById(String id) {
         return genreRepository.findById(id).orElse(null);

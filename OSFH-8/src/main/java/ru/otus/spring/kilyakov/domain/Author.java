@@ -19,11 +19,11 @@ import java.util.List;
 public class Author {
     @Id
     private String id;
-    @Field
+
     private String firstName;
-    @Field
+
     private String middleName;
-    @Field
+
     private String lastName;
 
     @DBRef
