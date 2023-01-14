@@ -49,7 +49,7 @@
 <body>
 
 <!-- Book edition -->
-<form id="edit-form" action="edit.html" th:action="${book?.id} ? @{/edit(id=${book.id})} : @{/add}" th:method="post"
+<form id="edit-form" action="edit.html" th:action="${book?.id} ? @{/book/edit(id=${book.id})} : @{/book/add}" th:method="post"
       th:object="${book}">
     <h3>Book Info:</h3>
 
@@ -78,7 +78,7 @@
 
     <div class="row">
         <button type="submit" th:text="Save">Save</button>
-        <a href="list.html" th:href="@{/}">
+        <a href="list.html" th:href="@{/book/}">
             <button type="button" th:text="Cancel">Cancel</button>
         </a>
     </div>

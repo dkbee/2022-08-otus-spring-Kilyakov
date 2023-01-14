@@ -53,7 +53,7 @@
 <h3 th:text="Books">Books:</h3>
 
 <div class="row">
-    <a th:href="@{/add}"><button type="button">Add book</button></a>
+    <a th:href="@{/book/add}"><button type="button">Add book</button></a>
 </div>
 
 <table class="books">
@@ -67,9 +67,14 @@
     <tbody>
     <tr th:each="book : ${books}">
         <td th:text="${book.id}">1</td>
-        <td><a th:href="@{/get(id=${book.id})}" href="read.html" th:text="${book.name}"></a></td>
+        <td><a th:href="@{/book/get(id=${book.id})}" href="read.html" th:text="${book.name}"></a></td>
         <td>
-            <a th:href="@{/edit(id=${book.id})}" href="edit.html" th:text="Edit">Edit</a>
+            <a th:href="@{/book/edit(id=${book.id})}" href="edit.html" th:text="Edit">Edit</a>
+        </td>
+        <td>
+            <form method="POST" th:action="@{/book/delete(id=${book.id})}">
+                <button type="submit" name="submit" value="value" class="link-button">Delete</button>
+            </form>
         </td>
     </tr>
     </tbody>
