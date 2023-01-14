@@ -47,6 +47,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Transactional(readOnly = true)
+    @Override
     public List<BookDto> getAll() {
         List<Book> books = bookRepository.findAll();
         List<BookDto> bookDtoList = new ArrayList<>();
