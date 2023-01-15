@@ -67,7 +67,7 @@
                 var name = document.createTextNode(book.name);
                 nameCell.id = 'name-book-cell-' + cellId;
                 document.getElementById("name-book-cell-" + cellId).innerHTML +=
-                    '<a id="get-book-cell" href="/book/get?id='+book.id+'">'+book.name+'</a>';
+                    '<a id="get-book-cell" href="/book/'+book.id+'">'+book.name+'</a>';
 
                 var authorCell = newRow.insertCell();
                 var author
@@ -92,10 +92,15 @@
                 var delCell = newRow.insertCell();
                 delCell.id = 'delete-book-cell-' + cellId;
                 document.getElementById("delete-book-cell-" + cellId).innerHTML +=
-                    '<form method="POST" action="/book/delete?id='+book.id+'"><button type="submit" name="submit" value="value" class="link-button">Delete</button></form>';
+                    '<button onclick="deleteBook('+book.id+')">Delete</button>';
             });
         }
 
+        function deleteBook(bookId) {
+            return fetch('/book/' + bookId, {
+                method: 'DELETE'
+            }).then(response => window.location.replace('/book/'));
+        }
 </script>
 
 <h3 th:text="Books">Books:</h3>

@@ -1,10 +1,7 @@
 package ru.otus.spring.kilyakov.controller.rest;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.otus.spring.kilyakov.dto.BookDto;
 import ru.otus.spring.kilyakov.service.AuthorService;
 import ru.otus.spring.kilyakov.service.BookService;
@@ -29,6 +26,11 @@ public class BookRestController {
     @GetMapping("/{id}")
     public BookDto list(@PathVariable Long id) {
         return bookService.getById(id);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteBook(@PathVariable Long id) {
+        bookService.deleteById(id);
     }
 
 }
