@@ -24,7 +24,6 @@
         }
 
         h3 {
-            background-image: url("../static/listmark.png");
             background-repeat: no-repeat;
             padding: 2px;
             padding-left: 30px;
@@ -34,7 +33,6 @@
 
     <style type="text/css" th:inline="text">
         [[h3]] {
-            background-image: url([[@{/listmark.png}]]);
             background-repeat: no-repeat;
             padding: 2px;
             padding-left: 30px;
@@ -42,42 +40,84 @@
 
     </style>
 </head>
-<body>
 
-<!--<h3 th:text="#{lang-switcher-header}">Select language</h3>-->
-<!--<div>-->
-<!--    <div><a href="#" th:href="@{/(lang=en)}" th:text="#{en-lang-switch-button-caption}">Language - EN</a></div>-->
-<!--    <div><a href="#" th:href="@{/(lang=ru)}" th:text="#{ru-lang-switch-button-caption}">Language - RU</a></div>-->
-<!--</div>-->
+<pre id="dataContainer"></pre>
+
+<body onload="getAllBooks()">
+
+<script th:inline="javascript">
+        function getAllBooks() {
+            fetch('/book/all')
+                .then(response => response.json())
+                .then(json => fillBooks(json))
+        }
+
+        function fillBooks(books) {
+        var cellId = 0;
+        books.forEach((book) => {
+                var tbodyRef = document.getElementById('books-table').getElementsByTagName('tbody')[0];
+                var newRow = tbodyRef.insertRow();
+                cellId = cellId + 1;
+
+                var idCell = newRow.insertCell();
+                var id = document.createTextNode(book.id);
+                idCell.appendChild(id);
+
+                var nameCell = newRow.insertCell();
+                var name = document.createTextNode(book.name);
+                nameCell.id = 'name-book-cell-' + cellId;
+                document.getElementById("name-book-cell-" + cellId).innerHTML +=
+                    '<a id="get-book-cell" href="/book/get?id='+book.id+'">'+book.name+'</a>';
+
+                var authorCell = newRow.insertCell();
+                var author
+                if (book.author.lastName !== null) {
+                    author = book.author.firstName + ' ' + book.author.lastName;
+                } else {
+                    author = book.author.firstName;
+                }
+                var authorText = document.createTextNode(author);
+                authorCell.appendChild(authorText);
+
+                var genreCell = newRow.insertCell();
+                var genre = document.createTextNode(book.genre.name);
+                genreCell.appendChild(genre);
+
+                var editCell = newRow.insertCell();
+
+                editCell.id = 'edit-book-cell-' + cellId;
+                document.getElementById("edit-book-cell-" + cellId).innerHTML +=
+                    '<a href="/book/edit?id='+book.id+'">Edit</a>';
+
+                var delCell = newRow.insertCell();
+                delCell.id = 'delete-book-cell-' + cellId;
+                document.getElementById("delete-book-cell-" + cellId).innerHTML +=
+                    '<form method="POST" action="/book/delete?id='+book.id+'"><button type="submit" name="submit" value="value" class="link-button">Delete</button></form>';
+            });
+        }
+
+</script>
 
 <h3 th:text="Books">Books:</h3>
 
 <div class="row">
-    <a th:href="@{/book/add}"><button type="button">Add book</button></a>
+    <a th:href="@{/book/add}">
+        <button type="button">Add book</button>
+    </a>
 </div>
 
-<table class="books">
+<table id="books-table" class="books">
     <thead>
     <tr>
         <th>ID</th>
         <th>Name</th>
-        <th>Action</th>
+        <th>Author</th>
+        <th>Genre</th>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="book : ${books}">
-        <td th:text="${book.id}">1</td>
-        <td><a th:href="@{/book/get(id=${book.id})}" href="read.html" th:text="${book.name}"></a></td>
-        <td>
-            <a th:href="@{/book/edit(id=${book.id})}" href="edit.html" th:text="Edit">Edit</a>
-        </td>
-        <td>
-            <form method="POST" th:action="@{/book/delete(id=${book.id})}">
-                <button type="submit" name="submit" value="value" class="link-button">Delete</button>
-            </form>
-        </td>
-    </tr>
     </tbody>
+
 </table>
 </body>
 </html>

@@ -31,8 +31,7 @@ public class BookController {
 
     @GetMapping("/get")
     public String getBookView(@RequestParam("id") long id, Model model) {
-        BookDto book = bookService.getById(id);
-        model.addAttribute("book", book);
+        model.addAttribute("id", id);
         return "read";
     }
 
