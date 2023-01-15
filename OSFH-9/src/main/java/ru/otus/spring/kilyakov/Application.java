@@ -10,6 +10,6 @@ public class Application {
 
     public static void main(String[] args) throws SQLException {
         SpringApplication.run(Application.class, args);
-        System.out.printf("%n%s%n", "http://localhost:8080");
+        System.out.printf("%n%s%n", "http://localhost:8080/book/");
     }
 }
