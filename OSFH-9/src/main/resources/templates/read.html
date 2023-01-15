@@ -22,7 +22,6 @@
         }
 
         h3 {
-            background-image: url("../static/listmark.png");
             background-repeat: no-repeat;
             padding: 2px;
             padding-left: 30px;
@@ -51,7 +50,6 @@
 
     <style type="text/css" th:inline="text">
         [[h3]] {
-            background-image: url([[@{/listmark.png}]]);
             background-repeat: no-repeat;
             padding: 2px;
             padding-left: 30px;
@@ -61,7 +59,7 @@
 </head>
 <body>
 
-<!-- Book edition -->
+<!-- Book read -->
 <form id="read-form" th:object="${book}">
     <h3>Book Info:</h3>
 

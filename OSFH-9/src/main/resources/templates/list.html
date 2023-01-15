@@ -34,7 +34,6 @@
 
     <style type="text/css" th:inline="text">
         [[h3]] {
-            background-image: url([[@{/listmark.png}]]);
             background-repeat: no-repeat;
             padding: 2px;
             padding-left: 30px;
@@ -43,12 +42,6 @@
     </style>
 </head>
 <body>
-
-<!--<h3 th:text="#{lang-switcher-header}">Select language</h3>-->
-<!--<div>-->
-<!--    <div><a href="#" th:href="@{/(lang=en)}" th:text="#{en-lang-switch-button-caption}">Language - EN</a></div>-->
-<!--    <div><a href="#" th:href="@{/(lang=ru)}" th:text="#{ru-lang-switch-button-caption}">Language - RU</a></div>-->
-<!--</div>-->
 
 <h3 th:text="Books">Books:</h3>
 
@@ -61,13 +54,17 @@
     <tr>
         <th>ID</th>
         <th>Name</th>
-        <th>Action</th>
+        <th>Author</th>
+        <th>Genre</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="book : ${books}">
         <td th:text="${book.id}">1</td>
         <td><a th:href="@{/book/get(id=${book.id})}" href="read.html" th:text="${book.name}"></a></td>
+        <td th:text="${book.author.lastName} ? ${book.author.firstName} + ' ' +
+          ${book.author.lastName} : ${book.author.firstName}"></td>
+        <td th:text="${book.genre.name}"></td>
         <td>
             <a th:href="@{/book/edit(id=${book.id})}" href="edit.html" th:text="Edit">Edit</a>
         </td>
