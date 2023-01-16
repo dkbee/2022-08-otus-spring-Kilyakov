@@ -22,10 +22,8 @@ public class BookController {
     private final AuthorService authorService;
     private final GenreService genreService;
 
-    @GetMapping("/")
+    @GetMapping("/all")
     public String listPageView(Model model) {
-        List<BookDto> books = bookService.getAll();
-        model.addAttribute("books", books);
         return "list";
     }
 
@@ -46,12 +44,6 @@ public class BookController {
         return "edit";
     }
 
-    @PostMapping("/add")
-    public String addBook(@ModelAttribute(name = "book") BookDto book,
-                          Model model) {
-        bookService.save(book.toDomainObject());
-        return "redirect:/book/";
-    }
 
     @GetMapping("/edit")
     public String editBookView(@RequestParam("id") long id, Model model) {
@@ -64,10 +56,5 @@ public class BookController {
         return "edit";
     }
 
-    @PostMapping("/edit")
-    public String editBook(BookDto book, Model model) {
-        bookService.update(book.toDomainObject());
-        return "redirect:/book/";
-    }
 
 }

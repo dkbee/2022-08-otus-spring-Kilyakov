@@ -47,7 +47,7 @@
 
 <script th:inline="javascript">
         function getAllBooks() {
-            fetch('/book/all')
+            fetch('/book')
                 .then(response => response.json())
                 .then(json => fillBooks(json))
         }
@@ -67,7 +67,7 @@
                 var name = document.createTextNode(book.name);
                 nameCell.id = 'name-book-cell-' + cellId;
                 document.getElementById("name-book-cell-" + cellId).innerHTML +=
-                    '<a id="get-book-cell" href="/book/'+book.id+'">'+book.name+'</a>';
+                    '<a id="get-book-cell" href="/book/get?id='+book.id+'">'+book.name+'</a>';
 
                 var authorCell = newRow.insertCell();
                 var author
@@ -99,7 +99,7 @@
         function deleteBook(bookId) {
             return fetch('/book/' + bookId, {
                 method: 'DELETE'
-            }).then(response => window.location.replace('/book/'));
+            }).then(response => window.location.replace('/book/all'));
         }
 </script>
 

@@ -47,10 +47,45 @@
 <body>
 
 <!-- Book edition -->
-<form id="edit-form" action="edit.html" th:action="${book?.id} ? @{/book/edit(id=${book.id})} : @{/book/add}" th:method="post"
-      th:object="${book}">
+<div th:object="${book}">
     <h3>Book Info:</h3>
+    <script th:inline="javascript">
+        function saveBook() {
+            var book = [[${book}]];
 
+            var bookName = document.getElementById('book-name-input').value;
+            book.name = bookName;
+            var bookAuthorId = document.getElementById('author-select-option').value;
+            var bookGenreId = document.getElementById('genre-select-option').value;
+
+            if (book.id === null) {
+                var author = {};
+                var genre = {};
+                genre.id = bookGenreId;
+                author.id = bookAuthorId;
+                book.author = author;
+                book.genre = genre;
+                console.log(book);
+                 fetch('/book', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify(book)
+                            }).then(response => window.location.replace('/book/all'));
+            } else {
+            book.author.id = bookAuthorId;
+            book.genre.id = bookGenreId;
+                fetch('/book', {
+                                method: 'PUT',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify(book)
+                            }).then(response => window.location.replace('/book/all'));
+            }
+        }
+    </script>
     <div class="row">
         <label for="id-input">ID:</label>
         <input id="id-input" type="text" readonly="readonly" th:value="*{id} ?: ''" value="1"/>
@@ -75,12 +110,12 @@
     </div>
 
     <div class="row">
-        <button type="submit" th:text="Save">Save</button>
-        <a href="list.html" th:href="@{/book/}">
+        <button th:attr="onclick=|saveBook()|">Save</button>
+        <a href="list.html" th:href="@{/book/all}">
             <button type="button" th:text="Cancel">Cancel</button>
         </a>
     </div>
-</form>
+</div>
 
 </body>
 </html>
