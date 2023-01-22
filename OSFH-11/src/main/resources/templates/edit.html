@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Edit book</title>
+    <style type="text/css">
+        body {
+            padding: 50px;
+        }
+
+        label {
+            display: inline-block;
+            width: 100px;
+        }
+
+        input:read-only {
+            background: lightgray;
+        }
+
+        .row {
+            margin-top: 10px;
+        }
+
+        h3 {
+            background-repeat: no-repeat;
+            padding: 2px;
+            padding-left: 30px;
+        }
+
+        .errors {
+            color: red;
+        }
+
+
+    </style>
+
+    <style type="text/css" th:inline="text">
+        [[h3]] {
+            background-repeat: no-repeat;
+            padding: 2px;
+            padding-left: 30px;
+        }
+
+
+    </style>
+</head>
+<body>
+
+<!-- Book edition -->
+<div th:object="${book}">
+    <h3>Book Info:</h3>
+    <script th:inline="javascript">
+        function saveBook() {
+            var book = [[${book}]];
+
+            var bookName = document.getElementById('book-name-input').value;
+            book.name = bookName;
+            var bookAuthorId = document.getElementById('author-select-option').value;
+            var bookGenreId = document.getElementById('genre-select-option').value;
+
+            if (book.id === null) {
+                var author = {};
+                var genre = {};
+                genre.id = bookGenreId;
+                author.id = bookAuthorId;
+                book.author = author;
+                book.genre = genre;
+                console.log(book);
+                 fetch('/book', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify(book)
+                            }).then(response => window.location.replace('/all'));
+            } else {
+            book.author.id = bookAuthorId;
+            book.genre.id = bookGenreId;
+                fetch('/book', {
+                                method: 'PUT',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify(book)
+                            }).then(response => window.location.replace('/all'));
+            }
+        }
+    </script>
+    <div class="row">
+        <label for="id-input">ID:</label>
+        <input id="id-input" type="text" readonly="readonly" th:value="*{id} ?: ''" value="1"/>
+    </div>
+
+    <div class="row">
+        <label for="book-name-input">Name:</label>
+        <input id="book-name-input" name="name" type="text" th:value="*{name} ?: ''" value="Test"/>
+    </div>
+    <div class="row">
+        <label for="author-select-option">Author:</label>
+        <select id="author-select-option" th:field="*{author}">
+            <option th:each="author : ${authors}" th:value="${author.id}"
+                    th:text="${author.lastName} ? ${author.firstName} + ' ' +  ${author.lastName} : ${author.firstName}"></option>
+        </select>
+    </div>
+    <div class="row">
+        <label for="genre-select-option">Genre:</label>
+        <select id="genre-select-option" th:field="*{genre}">
+            <option th:each="genre : ${genres}" th:value="${genre.id}" th:text="${genre.name}"></option>
+        </select>
+    </div>
+
+    <div class="row">
+        <button th:attr="onclick=|saveBook()|">Save</button>
+        <a href="list.html" th:href="@{/all}">
+            <button type="button" th:text="Cancel">Cancel</button>
+        </a>
+    </div>
+</div>
+
+</body>
+</html>
