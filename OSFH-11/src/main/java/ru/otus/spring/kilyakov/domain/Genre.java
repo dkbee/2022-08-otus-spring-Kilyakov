@@ -23,9 +23,4 @@ public class Genre {
 
     @DBRef
     private List<Book> book;
-
-    @Override
-    public String toString() {
-        return "Id = " + this.id + ", Genre  = \"" + this.name + "\"";
-    }
 }

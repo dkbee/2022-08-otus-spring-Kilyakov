@@ -16,16 +16,18 @@ dependencies {
     implementation 'org.projectlombok:lombok:1.18.22'
     annotationProcessor 'org.projectlombok:lombok:1.18.22'
 
-    //implementation 'org.springframework.boot:spring-boot-starter-webflux'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    //implementation "org.springframework.boot:spring-boot-starter-data-mongodb-reactive:${springBootVersion}"
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation "org.springframework.boot:spring-boot-starter-data-mongodb-reactive:${springBootVersion}"
     implementation "org.springframework.boot:spring-boot-starter-data-mongodb:${springBootVersion}"
     implementation "org.springframework.boot:spring-boot-starter-thymeleaf:${springBootVersion}"
 
     // Database
-    // https://mvnrepository.com/artifact/com.github.cloudyrock.mongock/mongock-spring-v5
-    implementation 'com.github.cloudyrock.mongock:mongock-spring-v5:4.1.17'
-    implementation 'com.github.cloudyrock.mongock:mongodb-springdata-v3-driver:4.1.17'
+    // https://mvnrepository.com/artifact/io.mongock/mongodb-reactive-driver
+    implementation 'io.mongock:mongodb-reactive-driver:5.0.39'
+    implementation "io.mongock:mongock-springboot:5.0.39"
+    implementation "io.mongock:mongodb-springdata-v3-driver:5.0.39"
+
 
     // Logging
     implementation 'org.slf4j:slf4j-api:1.7.33'

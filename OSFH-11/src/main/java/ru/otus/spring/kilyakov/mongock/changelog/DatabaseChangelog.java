@@ -1,8 +1,9 @@
 package ru.otus.spring.kilyakov.mongock.changelog;
 
-import com.github.cloudyrock.mongock.ChangeLog;
-import com.github.cloudyrock.mongock.ChangeSet;
 import com.mongodb.client.MongoDatabase;
+import io.mongock.api.annotations.ChangeUnit;
+import io.mongock.api.annotations.Execution;
+import io.mongock.api.annotations.RollbackExecution;
 import ru.otus.spring.kilyakov.domain.Author;
 import ru.otus.spring.kilyakov.domain.Book;
 import ru.otus.spring.kilyakov.domain.Comment;
@@ -14,29 +15,17 @@ import ru.otus.spring.kilyakov.repository.GenreRepository;
 import java.util.ArrayList;
 import java.util.List;
 
-@ChangeLog
+@ChangeUnit(id = "insertBooks", order = "1", runAlways = true)
 public class DatabaseChangelog {
 
-    @ChangeSet(order = "001", id = "dropDb", runAlways = true, author = "")
-    public void dropDb(MongoDatabase db) {
+    @Execution
+    public void insertAuthors(MongoDatabase db, AuthorRepository authorRepository, GenreRepository genreRepository, BookRepository bookRepository) {
         db.drop();
-    }
-
-    @ChangeSet(order = "002", id = "insertAuthors", author = "")
-    public void insertAuthors(AuthorRepository authorRepository) {
         authorRepository.save(Author.builder().id("1").firstName("Barnabus").lastName("Stinson")
-                .build());
-        authorRepository.save(Author.builder().id("2").firstName("Petr").middleName("Ivanovich").build());
-    }
-
-    @ChangeSet(order = "002", id = "insertGenres", author = "")
-    public void insertGenres(GenreRepository genreRepository) {
-        genreRepository.save(Genre.builder().id("1").name("Manual").build());
-        genreRepository.save(Genre.builder().id("2").name("Story").build());
-    }
-
-    @ChangeSet(order = "003", id = "insertBooks", author = "")
-    public void insertBooks(BookRepository bookRepository) {
+                .build()).block();
+        authorRepository.save(Author.builder().id("2").firstName("Petr").middleName("Ivanovich").build()).block();
+        genreRepository.save(Genre.builder().id("1").name("Manual").build()).block();
+        genreRepository.save(Genre.builder().id("2").name("Story").build()).block();
         List<Comment> comments = new ArrayList<>();
         comments.add(Comment.builder().comment("blablabla").build());
         bookRepository.save(Book.builder()
@@ -46,6 +35,11 @@ public class DatabaseChangelog {
                         .build())
                 .genre(Genre.builder().id("1").name("Manual").build())
                 .comments(comments)
-                .build());
+                .build()).block();
+    }
+
+    @RollbackExecution
+    public void rollbackExecution() {
+
     }
 }

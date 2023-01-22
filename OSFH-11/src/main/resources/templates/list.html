@@ -92,7 +92,7 @@
                 var delCell = newRow.insertCell();
                 delCell.id = 'delete-book-cell-' + cellId;
                 document.getElementById("delete-book-cell-" + cellId).innerHTML +=
-                    '<button onclick="deleteBook('+book.id+')">Delete</button>';
+                    '<button onclick="deleteBook(&quot;'+book.id+'&quot;)">Delete</button>';
             });
         }
 

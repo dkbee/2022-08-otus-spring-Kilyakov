@@ -1,12 +1,11 @@
 package ru.otus.spring.kilyakov;
 
-import com.github.cloudyrock.spring.v5.EnableMongock;
+import io.mongock.runner.springboot.EnableMongock;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.mongo.embedded.EmbeddedMongoAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
-import org.springframework.context.annotation.Import;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
@@ -19,13 +18,11 @@ import ru.otus.spring.kilyakov.domain.Genre;
 import ru.otus.spring.kilyakov.dto.BookDto;
 import ru.otus.spring.kilyakov.repository.AuthorRepository;
 import ru.otus.spring.kilyakov.repository.BookRepository;
-import ru.otus.spring.kilyakov.service.impl.BookServiceImpl;
 
 import java.util.List;
 import java.util.Optional;
 
 @DataMongoTest(excludeAutoConfiguration = EmbeddedMongoAutoConfiguration.class)
-@Import(value = {BookServiceImpl.class})
 @EnableMongock
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 @Testcontainers
@@ -33,9 +30,6 @@ class BookServiceTest {
 
     @Autowired
     BookRepository bookRepository;
-
-    @Autowired
-    BookServiceImpl bookService;
 
     @Autowired
     AuthorRepository authorRepository;

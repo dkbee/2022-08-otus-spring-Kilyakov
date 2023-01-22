@@ -52,21 +52,22 @@
     <script th:inline="javascript">
         function saveBook() {
             var book = [[${book}]];
+            var genres = [[${genres}]];
+            var authors = [[${authors}]];
 
             var bookName = document.getElementById('book-name-input').value;
             book.name = bookName;
+
             var bookAuthorId = document.getElementById('author-select-option').value;
+            var author = authors.find(x => x.id === bookAuthorId);
+            book.author = author;
+
             var bookGenreId = document.getElementById('genre-select-option').value;
+            var genre = genres.find(x => x.id === bookGenreId);
+            book.genre = genre;
 
             if (book.id === null) {
-                var author = {};
-                var genre = {};
-                genre.id = bookGenreId;
-                author.id = bookAuthorId;
-                book.author = author;
-                book.genre = genre;
-                console.log(book);
-                 fetch('/book', {
+                fetch('/book', {
                                 method: 'POST',
                                 headers: {
                                     'Content-Type': 'application/json'
@@ -74,8 +75,6 @@
                                 body: JSON.stringify(book)
                             }).then(response => window.location.replace('/all'));
             } else {
-            book.author.id = bookAuthorId;
-            book.genre.id = bookGenreId;
                 fetch('/book', {
                                 method: 'PUT',
                                 headers: {
@@ -97,14 +96,14 @@
     </div>
     <div class="row">
         <label for="author-select-option">Author:</label>
-        <select id="author-select-option" th:field="*{author}">
+        <select id="author-select-option" th:field="*{author.id}">
             <option th:each="author : ${authors}" th:value="${author.id}"
                     th:text="${author.lastName} ? ${author.firstName} + ' ' +  ${author.lastName} : ${author.firstName}"></option>
         </select>
     </div>
     <div class="row">
         <label for="genre-select-option">Genre:</label>
-        <select id="genre-select-option" th:field="*{genre}">
+        <select id="genre-select-option" th:field="*{genre.id}">
             <option th:each="genre : ${genres}" th:value="${genre.id}" th:text="${genre.name}"></option>
         </select>
     </div>
