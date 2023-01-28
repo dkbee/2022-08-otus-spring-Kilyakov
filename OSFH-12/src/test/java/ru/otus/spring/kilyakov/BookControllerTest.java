@@ -89,7 +89,14 @@ class BookControllerTest {
 
     @Test
     public void insertBookDenied() throws Exception {
-        mockMvc.perform(post("/book/add"))
+        mockMvc.perform(post("/book/add")
+                        .param("name", "Test")
+                        .param("id", "1")
+                        .param("author.id", "1")
+                        .param("author.firstName", "Ivan")
+                        .param("author.LastName", "Ivanov")
+                        .param("genre.id", "1")
+                        .param("genre.name", "Story"))
                 .andExpect(status().is3xxRedirection())
                 .andReturn();
     }
@@ -165,6 +172,13 @@ class BookControllerTest {
                 .andReturn();
     }
 
+    @Test
+    public void updateBookViewDeniedTest() throws Exception {
+        mockMvc.perform(get("/book/edit")
+                        .param("id", "1"))
+                .andExpect(status().is3xxRedirection());
+    }
+
     @WithMockUser(
             username = "admin"
     )
@@ -177,6 +191,20 @@ class BookControllerTest {
                 .andExpect(model().attributeExists("authors"))
                 .andExpect(model().attributeExists("genres"))
                 .andReturn();
+    }
+
+    @Test
+    public void updateBookDeniedTest() throws Exception {
+        mockMvc.perform(post("/book/edit")
+                        .param("name", "Test")
+                        .param("id", "1")
+                        .param("author.id", "1")
+                        .param("author.firstName", "Ivan")
+                        .param("author.LastName", "Ivanov")
+                        .param("genre.id", "1")
+                        .param("genre.name", "Story")
+                )
+                .andExpect(status().is3xxRedirection());
     }
 
     @WithMockUser(
@@ -211,6 +239,14 @@ class BookControllerTest {
                 .andExpect(view().name("redirect:/book/"))
                 .andReturn();
         verify(bookService, times(1)).update(bookDto.toDomainObject());
+    }
+
+    @Test
+    public void deleteBookDeniedTest() throws Exception {
+        mockMvc.perform(post("/book/delete")
+                        .param("id", "1")
+                )
+                .andExpect(status().is3xxRedirection());
     }
 
     @WithMockUser(
