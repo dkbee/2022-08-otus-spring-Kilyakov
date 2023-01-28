@@ -9,33 +9,32 @@ import ru.otus.spring.kilyakov.dto.BookDto;
 import ru.otus.spring.kilyakov.repository.BookRepository;
 
 @RestController()
-@RequestMapping("/book")
 @RequiredArgsConstructor
 public class BookReactiveController {
 
     private final BookRepository bookRepository;
 
-    @GetMapping
+    @GetMapping("/book")
     public Flux<BookDto> list() {
         return bookRepository.findAll().map(BookDto::toDto);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/book/{id}")
     public Mono<BookDto> list(@PathVariable String id) {
         return bookRepository.findById(id).map(BookDto::toDto);
     }
 
-    @PostMapping
+    @PostMapping("/book")
     public Mono<BookDto> add(@RequestBody BookDto bookDto) {
         return bookRepository.save(bookDto.toDomainObject()).map(BookDto::toDto);
     }
 
-    @PutMapping
+    @PutMapping("/book")
     public Mono<BookDto> edit(@RequestBody BookDto bookDto) {
         return bookRepository.save(bookDto.toDomainObject()).map(BookDto::toDto);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/book/{id}")
     public Mono<ServerResponse> deleteBook(@PathVariable String id) {
         return bookRepository.deleteById(id).then(ServerResponse.ok().build());
     }
