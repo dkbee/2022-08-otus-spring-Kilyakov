@@ -11,3 +11,6 @@ insert into comments (comment, book_id) values ('blablabla', 1);
 insert into comments (comment, book_id) values ('tralala', 1);
 insert into comments (comment, book_id) values ('nice', 2);
 insert into comments (comment, book_id) values ('terrible', 2);
+
+insert into users (username, password, enabled) values ('admin', 'password', true);
+insert into authorities (username, authority) values ('admin', 'ROLE_ADMIN');

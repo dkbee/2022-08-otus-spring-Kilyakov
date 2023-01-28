@@ -6,6 +6,7 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.otus.spring.kilyakov.controller.BookController;
 import ru.otus.spring.kilyakov.domain.Author;
@@ -15,6 +16,7 @@ import ru.otus.spring.kilyakov.service.AuthorService;
 import ru.otus.spring.kilyakov.service.BookService;
 import ru.otus.spring.kilyakov.service.GenreService;
 
+import javax.sql.DataSource;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,8 +25,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(controllers = BookController.class)
 class BookControllerTest {
@@ -40,6 +41,9 @@ class BookControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
+
+    @MockBean
+    DataSource dataSource;
 
     @BeforeEach
     public void beforeEach() {
@@ -70,6 +74,9 @@ class BookControllerTest {
         Mockito.when(bookService.getAll()).thenReturn(bookDtoList);
     }
 
+    @WithMockUser(
+            username = "admin"
+    )
     @Test
     public void insertBookViewTest() throws Exception {
         mockMvc.perform(get("/book/add"))
@@ -80,6 +87,16 @@ class BookControllerTest {
                 .andReturn();
     }
 
+    @Test
+    public void insertBookDenied() throws Exception {
+        mockMvc.perform(post("/book/add"))
+                .andExpect(status().is3xxRedirection())
+                .andReturn();
+    }
+
+    @WithMockUser(
+            username = "admin"
+    )
     @Test
     public void insertBookTest() throws Exception {
         Author author = Author.builder()
@@ -112,6 +129,16 @@ class BookControllerTest {
     }
 
     @Test
+    public void getBooksDeniedTest() throws Exception {
+        mockMvc.perform(get("/book/")
+                        .param("id", "1"))
+                .andExpect(status().is3xxRedirection());
+    }
+
+    @WithMockUser(
+            username = "admin"
+    )
+    @Test
     public void getBookTest() throws Exception {
         mockMvc.perform(get("/book/get")
                         .param("id", "1"))
@@ -121,14 +148,26 @@ class BookControllerTest {
     }
 
     @Test
+    public void getAllBooksDeniedTest() throws Exception {
+        mockMvc.perform(get("/book/"))
+                .andExpect(status().is3xxRedirection());
+
+    }
+
+    @WithMockUser(
+            username = "admin"
+    )
+    @Test
     public void getAllBooksTest() throws Exception {
-        mockMvc.perform(get("/book/")
-                        .param("id", "1"))
+        mockMvc.perform(get("/book/"))
                 .andExpect(view().name("list"))
                 .andExpect(model().attributeExists("books"))
                 .andReturn();
     }
 
+    @WithMockUser(
+            username = "admin"
+    )
     @Test
     public void updateBookViewTest() throws Exception {
         mockMvc.perform(get("/book/edit")
@@ -140,6 +179,9 @@ class BookControllerTest {
                 .andReturn();
     }
 
+    @WithMockUser(
+            username = "admin"
+    )
     @Test
     public void updateBookTest() throws Exception {
         Author author = Author.builder()
@@ -171,6 +213,9 @@ class BookControllerTest {
         verify(bookService, times(1)).update(bookDto.toDomainObject());
     }
 
+    @WithMockUser(
+            username = "admin"
+    )
     @Test
     public void deleteBookTest() throws Exception {
         mockMvc.perform(post("/book/delete")

@@ -14,7 +14,6 @@ import ru.otus.spring.kilyakov.service.GenreService;
 import java.util.List;
 
 @Controller
-@RequestMapping("/book")
 @RequiredArgsConstructor
 public class BookController {
 
@@ -22,21 +21,26 @@ public class BookController {
     private final AuthorService authorService;
     private final GenreService genreService;
 
-    @GetMapping("/")
+    @GetMapping("/book")
     public String listPageView(Model model) {
         List<BookDto> books = bookService.getAll();
         model.addAttribute("books", books);
         return "list";
     }
 
-    @GetMapping("/get")
+    @GetMapping
+    public String redirectToList() {
+        return "redirect:/book/";
+    }
+
+    @GetMapping("/book/get")
     public String getBookView(@RequestParam("id") long id, Model model) {
         BookDto book = bookService.getById(id);
         model.addAttribute("book", book);
         return "read";
     }
 
-    @GetMapping("/add")
+    @GetMapping("/book/add")
     public String addBookView(Model model) {
         BookDto bookDto = new BookDto();
         List<Author> authors = authorService.getAll();
@@ -47,14 +51,14 @@ public class BookController {
         return "edit";
     }
 
-    @PostMapping("/add")
+    @PostMapping("/book/add")
     public String addBook(@ModelAttribute(name = "book") BookDto book,
                           Model model) {
         bookService.save(book.toDomainObject());
         return "redirect:/book/";
     }
 
-    @GetMapping("/edit")
+    @GetMapping("/book/edit")
     public String editBookView(@RequestParam("id") long id, Model model) {
         BookDto book = bookService.getById(id);
         List<Author> authors = authorService.getAll();
@@ -65,13 +69,13 @@ public class BookController {
         return "edit";
     }
 
-    @PostMapping("/edit")
+    @PostMapping("/book/edit")
     public String editBook(BookDto book, Model model) {
         bookService.update(book.toDomainObject());
         return "redirect:/book/";
     }
 
-    @PostMapping("/delete")
+    @PostMapping("/book/delete")
     public String deleteBook(@RequestParam("id") long id, Model model) {
         bookService.deleteById(id);
         return "redirect:/book/";
