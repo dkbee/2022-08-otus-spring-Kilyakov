@@ -1,0 +1,46 @@
+plugins {
+    id 'org.springframework.boot' version "${springBootVersion}"
+    id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+    id 'java'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.projectlombok:lombok:1.18.22'
+    annotationProcessor 'org.projectlombok:lombok:1.18.22'
+
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    implementation "org.springframework.boot:spring-boot-starter-data-mongodb-reactive:${springBootVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-thymeleaf:${springBootVersion}"
+
+    // Logging
+    implementation 'org.slf4j:slf4j-api:1.7.33'
+    implementation 'net.logstash.logback:logstash-logback-encoder:7.0.1'
+
+    // Testing
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+    // https://mvnrepository.com/artifact/org.mockito/mockito-core
+    testImplementation 'org.mockito:mockito-core:4.6.0'
+    // https://mvnrepository.com/artifact/org.mockito/mockito-junit-jupiter
+    testImplementation 'org.mockito:mockito-junit-jupiter:2.17.0'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation "org.testcontainers:mongodb:1.17.6"
+    testImplementation "org.testcontainers:junit-jupiter:1.17.6"
+    // https://mvnrepository.com/artifact/io.projectreactor/reactor-test
+    testImplementation 'io.projectreactor:reactor-test:3.5.2'
+    // https://mvnrepository.com/artifact/de.flapdoodle.embed/de.flapdoodle.embed.mongo
+    testImplementation 'de.flapdoodle.embed:de.flapdoodle.embed.mongo'
+
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
