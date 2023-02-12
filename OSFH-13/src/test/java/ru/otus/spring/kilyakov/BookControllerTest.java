@@ -75,7 +75,8 @@ class BookControllerTest {
     }
 
     @WithMockUser(
-            username = "admin"
+            username = "admin",
+            roles = { "ADMIN" }
     )
     @Test
     public void insertBookViewTest() throws Exception {
@@ -102,7 +103,8 @@ class BookControllerTest {
     }
 
     @WithMockUser(
-            username = "admin"
+            username = "admin",
+            roles = { "ADMIN" }
     )
     @Test
     public void insertBookTest() throws Exception {
@@ -143,7 +145,7 @@ class BookControllerTest {
     }
 
     @WithMockUser(
-            username = "admin"
+            username = "user"
     )
     @Test
     public void getBookTest() throws Exception {
@@ -162,7 +164,8 @@ class BookControllerTest {
     }
 
     @WithMockUser(
-            username = "admin"
+            username = "guest"//,
+            //roles = { "GUEST" }
     )
     @Test
     public void getAllBooksTest() throws Exception {
@@ -180,7 +183,8 @@ class BookControllerTest {
     }
 
     @WithMockUser(
-            username = "admin"
+            username = "admin",
+            roles = { "ADMIN" }
     )
     @Test
     public void updateBookViewTest() throws Exception {
@@ -208,7 +212,8 @@ class BookControllerTest {
     }
 
     @WithMockUser(
-            username = "admin"
+            username = "admin",
+            roles = { "ADMIN" }
     )
     @Test
     public void updateBookTest() throws Exception {
@@ -250,7 +255,8 @@ class BookControllerTest {
     }
 
     @WithMockUser(
-            username = "admin"
+            username = "admin",
+            roles = { "ADMIN" }
     )
     @Test
     public void deleteBookTest() throws Exception {

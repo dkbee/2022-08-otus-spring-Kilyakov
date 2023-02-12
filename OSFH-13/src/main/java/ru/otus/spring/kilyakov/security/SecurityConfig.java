@@ -24,10 +24,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
-                .authorizeRequests().antMatchers("/**").authenticated()
+                .authorizeRequests().antMatchers("/", "/book", "/book/").hasRole("GUEST")
+                .and()
+                .authorizeRequests().antMatchers("/book/get").hasAnyRole("USER", "ADMIN")
+                .and()
+                .authorizeRequests().antMatchers("/book/edit").hasRole("ADMIN")
+                .and()
+                .authorizeRequests().antMatchers("/book/add").hasRole("ADMIN")
+                .and()
+                .authorizeRequests().antMatchers("/book/delete").hasRole("ADMIN")
                 .and()
                 .formLogin()
-                .defaultSuccessUrl("/book");
+                .and()
+                .logout().logoutUrl("/logout");
     }
 
     @SuppressWarnings("deprecation")

@@ -3,12 +3,10 @@ package ru.otus.spring.kilyakov;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.sql.SQLException;
-
 @SpringBootApplication
 public class Application {
 
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
         System.out.printf("%n%s%n", "http://localhost:8080/book/");
     }
