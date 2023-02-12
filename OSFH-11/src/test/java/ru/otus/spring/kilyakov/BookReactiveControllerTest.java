@@ -32,6 +32,9 @@ class BookReactiveControllerTest {
     @MockBean
     BookRepository bookRepository;
 
+    @Autowired
+    private WebTestClient webClient;
+
     @BeforeEach
     public void beforeEach() {
         Author author = Author.builder()
@@ -57,10 +60,6 @@ class BookReactiveControllerTest {
                 Flux.fromIterable(bookList));
         when(bookRepository.deleteById(anyString())).thenReturn(ServerResponse.ok().build().then());
     }
-
-    @Autowired
-    private WebTestClient webClient;
-
     @Test
     public void insertBookTest() {
         Author author = Author.builder()
