@@ -63,11 +63,6 @@ public class UserDetailsServiceImpl extends JdbcDaoSupport implements UserDetail
                     new Object[]{username}, "Username {0} not found"));
         }
         CustomUser customUser = customUsers.get(0);
-        if (!customUser.isEnabled()) {
-            this.logger.debug("User '" + username + "' has been disabled");
-            throw new UsernameNotFoundException(this.messages.getMessage("JdbcDaoImpl.notFound",
-                    new Object[]{username}, "Username {0} has been disabled"));
-        }
         Set<GrantedAuthority> dbAuthsSet = new HashSet<>(loadUserAuthorities(customUser.getUsername()));
         List<GrantedAuthority> dbAuths = new ArrayList<>(dbAuthsSet);
         return createUserDetails(customUser, dbAuths);
