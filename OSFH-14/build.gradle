@@ -41,6 +41,8 @@ dependencies {
 	// https://mvnrepository.com/artifact/org.mockito/mockito-junit-jupiter
 	testImplementation 'org.mockito:mockito-junit-jupiter:2.17.0'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	// https://mvnrepository.com/artifact/org.springframework.batch/spring-batch-test
+	testImplementation 'org.springframework.batch:spring-batch-test:4.3.0'
 	// https://mvnrepository.com/artifact/de.flapdoodle.embed/de.flapdoodle.embed.mongo
 	testImplementation 'de.flapdoodle.embed:de.flapdoodle.embed.mongo'
 }
