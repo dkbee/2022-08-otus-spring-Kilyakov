@@ -1,4 +1,4 @@
-package ru.otus.spring.kilyakov.domain;
+package ru.otus.spring.kilyakov.domain.relational;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

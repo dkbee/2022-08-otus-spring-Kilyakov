@@ -1,7 +1,7 @@
 package ru.otus.spring.kilyakov.service.impl;
 
 import org.springframework.stereotype.Service;
-import ru.otus.spring.kilyakov.domain.Author;
+import ru.otus.spring.kilyakov.domain.relational.Author;
 import ru.otus.spring.kilyakov.repository.AuthorRepository;
 import ru.otus.spring.kilyakov.service.AuthorService;
 

@@ -4,9 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ru.otus.spring.kilyakov.domain.Author;
-import ru.otus.spring.kilyakov.domain.Comment;
-import ru.otus.spring.kilyakov.domain.Genre;
+import ru.otus.spring.kilyakov.domain.relational.Author;
+import ru.otus.spring.kilyakov.domain.relational.Comment;
+import ru.otus.spring.kilyakov.domain.relational.Genre;
 
 import java.util.List;
 

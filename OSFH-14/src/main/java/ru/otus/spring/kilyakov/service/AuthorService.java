@@ -1,7 +1,7 @@
 package ru.otus.spring.kilyakov.service;
 
 
-import ru.otus.spring.kilyakov.domain.Author;
+import ru.otus.spring.kilyakov.domain.relational.Author;
 
 import java.util.List;
 

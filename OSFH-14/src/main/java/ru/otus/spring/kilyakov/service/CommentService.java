@@ -1,6 +1,6 @@
 package ru.otus.spring.kilyakov.service;
 
-import ru.otus.spring.kilyakov.domain.Comment;
+import ru.otus.spring.kilyakov.domain.relational.Comment;
 import ru.otus.spring.kilyakov.dto.CommentDto;
 
 import java.util.List;

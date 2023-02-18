@@ -5,8 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import ru.otus.spring.kilyakov.domain.Book;
-import ru.otus.spring.kilyakov.domain.Comment;
+import ru.otus.spring.kilyakov.domain.relational.Book;
+import ru.otus.spring.kilyakov.domain.relational.Comment;
 import ru.otus.spring.kilyakov.repository.BookRepository;
 import ru.otus.spring.kilyakov.repository.CommentRepository;
 

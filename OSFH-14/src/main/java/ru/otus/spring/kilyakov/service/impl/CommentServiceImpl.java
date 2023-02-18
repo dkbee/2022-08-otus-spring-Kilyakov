@@ -2,8 +2,8 @@ package ru.otus.spring.kilyakov.service.impl;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.otus.spring.kilyakov.domain.Book;
-import ru.otus.spring.kilyakov.domain.Comment;
+import ru.otus.spring.kilyakov.domain.relational.Book;
+import ru.otus.spring.kilyakov.domain.relational.Comment;
 import ru.otus.spring.kilyakov.dto.CommentDto;
 import ru.otus.spring.kilyakov.repository.BookRepository;
 import ru.otus.spring.kilyakov.repository.CommentRepository;
