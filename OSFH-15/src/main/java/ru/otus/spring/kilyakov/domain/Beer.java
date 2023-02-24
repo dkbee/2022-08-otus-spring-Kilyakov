@@ -1,13 +1,16 @@
 package ru.otus.spring.kilyakov.domain;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
-public class Beer {
-    private String name;
+public class Beer extends Drink{
     private int og;
     private int ibu;
-    private int volume;
+
+    public Beer(String name, int  alcohol, int volume, int og, int ibu) {
+        super(name, alcohol, volume);
+        this.og = og;
+        this.ibu = ibu;
+    }
 }
