@@ -10,7 +10,13 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Drink {
+
+    public Drink(String type, int volume) {
+        this.type = type;
+        this.volume = volume;
+    }
     private String name;
-    private int alcohol;
+    private String type;
+    private double alcohol;
     private int volume;
 }

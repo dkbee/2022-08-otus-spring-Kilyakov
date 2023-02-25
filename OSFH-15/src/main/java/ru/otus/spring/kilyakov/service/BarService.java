@@ -9,11 +9,6 @@ import java.util.Collection;
 @MessagingGateway
 public interface BarService {
     @Gateway(requestChannel = "barFlow.input", replyChannel = "barChannel")
-    Collection<Beer> processBeer(Collection<OrderItem> orderItem);
+    Collection<Drink> processDrink(Collection<OrderItem> orderItem);
 
-    @Gateway(requestChannel = "barFlow.input", replyChannel = "barChannel")
-    Collection<Vodka> processVodka(Collection<OrderItem> orderItem);
-
-    @Gateway(requestChannel = "barFlow.input", replyChannel = "barChannel")
-    Collection<Cocktail> processCocktail(Collection<OrderItem> orderItem);
 }

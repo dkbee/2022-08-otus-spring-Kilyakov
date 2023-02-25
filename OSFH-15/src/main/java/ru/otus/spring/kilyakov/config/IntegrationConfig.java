@@ -6,17 +6,23 @@ import org.springframework.integration.channel.PublishSubscribeChannel;
 import org.springframework.integration.channel.QueueChannel;
 import org.springframework.integration.dsl.IntegrationFlow;
 import org.springframework.integration.dsl.MessageChannels;
+import org.springframework.integration.dsl.Pollers;
 import org.springframework.integration.scheduling.PollerMetadata;
-import ru.otus.spring.kilyakov.domain.Beer;
+import org.springframework.integration.transformer.GenericTransformer;
+import ru.otus.spring.kilyakov.domain.Cocktail;
+import ru.otus.spring.kilyakov.domain.Drink;
 import ru.otus.spring.kilyakov.domain.OrderItem;
-import ru.otus.spring.kilyakov.domain.Vodka;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Configuration
 public class IntegrationConfig {
 
     @Bean
     public QueueChannel ordersChannel() {
-        return MessageChannels.queue(10).get();
+        return MessageChannels.queue( 10 ).get();
     }
 
     @Bean
@@ -26,7 +32,7 @@ public class IntegrationConfig {
 
     @Bean(name = PollerMetadata.DEFAULT_POLLER)
     public PollerMetadata poller() {
-        return new PollerMetadata();
+        return Pollers.fixedRate( 100 ).maxMessagesPerPoll( 2 ).get();
     }
 
     @Bean
@@ -35,14 +41,30 @@ public class IntegrationConfig {
                 .<OrderItem, Class<?>>route(
                         OrderItem::getType,
                         mapping -> mapping
-                                .subFlowMapping(Beer.class, sf ->
-                                        sf.handle("puzzlesBarService", "pourBeer")
+                                .subFlowMapping(Drink.class, sf ->
+                                        sf.handle("puzzlesBarService", "pourDrink")
                                                 .aggregate()
+                                                .transform((GenericTransformer< List<Optional<Drink>>, List<Drink>>) source -> {
+                                                    List<Drink> drinks = new ArrayList<>();
+                                                    for (Optional<Drink> optional:
+                                                    source) {
+                                                        drinks.add(optional.orElse(null));
+                                                    }
+                                                    return drinks;
+                                                })
                                                 .channel("barChannel")
                                 )
-                                .subFlowMapping(Vodka.class, sf ->
-                                        sf.handle("puzzlesBarService", "pourVodka")
+                                .subFlowMapping(Cocktail.class, sf ->
+                                        sf.handle("puzzlesBarService", "pourCocktail")
                                                 .aggregate()
+                                                .transform((GenericTransformer< List<Optional<Cocktail>>, List<Cocktail>>) source -> {
+                                                    List<Cocktail> drinks = new ArrayList<>();
+                                                    for (Optional<Cocktail> optional:
+                                                            source) {
+                                                        drinks.add(optional.orElse(null));
+                                                    }
+                                                    return drinks;
+                                                })
                                                 .channel("barChannel")
                                 )
                 );
