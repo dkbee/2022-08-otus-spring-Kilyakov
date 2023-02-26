@@ -24,8 +24,8 @@ dependencies {
 	implementation "org.springframework.boot:spring-boot-starter-thymeleaf:${springBootVersion}"
 
 	// Database
-	// https://mvnrepository.com/artifact/com.h2database/h2
-	implementation 'com.h2database:h2:2.1.214'
+	// https://mvnrepository.com/artifact/org.postgresql/postgresql
+	implementation 'org.postgresql:postgresql:42.5.4'
 
 	// Logging
 	implementation 'org.slf4j:slf4j-api:1.7.33'
