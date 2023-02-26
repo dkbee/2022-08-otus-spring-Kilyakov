@@ -22,6 +22,8 @@ dependencies {
 	implementation "org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}"
 	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-thymeleaf
 	implementation "org.springframework.boot:spring-boot-starter-thymeleaf:${springBootVersion}"
+	runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
+	implementation "org.springframework.boot:spring-boot-starter-actuator"
 
 	// Database
 	// https://mvnrepository.com/artifact/com.h2database/h2

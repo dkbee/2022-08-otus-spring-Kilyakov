@@ -23,3 +23,25 @@ spring:
       path: /h2-console
       settings:
         web-allow-others: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          health,prometheus,loggers
+  endpoint:
+    health:
+      show-details: always
+    loggers:
+      enabled: true
+  health:
+    custom:
+      enabled: true
+    defaults:
+      enabled: false
+
+
+  metrics:
+    export:
+      prometheus:
+        enabled: true
