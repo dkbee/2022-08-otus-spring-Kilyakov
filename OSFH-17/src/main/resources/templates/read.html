@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Edit book</title>
+    <style type="text/css">
+        body {
+            padding: 50px;
+        }
+
+        label {
+            display: inline-block;
+            width: 100px;
+        }
+
+        input:read-only {
+            background: lightgray;
+        }
+
+        .row {
+            margin-top: 10px;
+        }
+
+        h3 {
+            background-repeat: no-repeat;
+            padding: 2px;
+            padding-left: 30px;
+        }
+
+        .errors {
+            color: red;
+        }
+
+        .comments {
+            border: 1px solid steelblue;
+            width: 300px;
+            border-collapse: collapse;
+        }
+
+        .comments tr td, th {
+            padding: 5px;
+            border: 1px solid steelblue;
+        }
+
+        .comments td:last-child, td:first-child {
+            width: 50px;
+        }
+
+    </style>
+
+    <style type="text/css" th:inline="text">
+        [[h3]] {
+            background-repeat: no-repeat;
+            padding: 2px;
+            padding-left: 30px;
+        }
+
+    </style>
+</head>
+<body onload="getBookById()">
+
+<script th:inline="javascript" th:object="${id}">
+        function getBookById() {
+        var bookId = [[${id}]];
+            fetch('/book/' + bookId)
+                .then(response => response.json())
+                .then(json => fillBooks(json))
+        }
+
+        function fillBooks(book) {
+
+            document.getElementById('book-name-read').innerHTML
+                            = book.name;
+            var authorName;
+            if (book.author.lastName !== null) {
+                authorName = book.author.firstName + ' ' + book.author.lastName;
+            } else {
+                authorName = book.author.firstName;
+            }
+            document.getElementById('author-name-read').innerHTML
+                            = authorName;
+
+            document.getElementById('genre-name-read').innerHTML
+                = book.genre.name;
+
+            var tbodyRef = document.getElementById('comments-name-read').getElementsByTagName('tbody')[0];
+            book.comments.forEach((comment) => {
+            var newRow = tbodyRef.insertRow();
+                var commentCell = newRow.insertCell();
+                var comment = document.createTextNode(comment.comment);
+                commentCell.appendChild(comment);
+            });
+
+        }
+
+</script>
+
+<!-- Book edition -->
+<form id="read-form">
+    <h3>Book Info:</h3>
+
+    <div class="row">
+        <label for="book-name-read">Name:</label>
+        <label id="book-name-read"></label>
+    </div>
+    <div class="row">
+        <label for="author-name-read">Author:</label>
+        <label id="author-name-read"></label>
+    </div>
+    <div class="row">
+        <label for="genre-name-read">Genre:</label>
+        <label id="genre-name-read"></label>
+    </div>
+
+    <label for="comments-name-read">Comments:</label>
+    <table class="comments" id="comments-name-read">
+        <thead>
+        <tr>
+            <th>Comment</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <div class="row">
+        <a href="list.html" th:href="@{/book/all}">
+            <button type="button" th:text="Cancel">Cancel</button>
+        </a>
+    </div>
+</form>
+
+</body>
+</html>
